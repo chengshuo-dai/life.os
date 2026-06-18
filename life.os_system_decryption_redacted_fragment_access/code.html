@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LIFE.OS // DECRYPTION_GATEWAY</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+        .cursor-blink { animation: blink 1s step-end infinite; }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .grid-bg {
+            background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 18px 18px;
+        }
+
+        .glitch-text {
+            text-shadow: 2px 0 #00a6e0, -2px 0 #ffb4ab;
+            animation: glitch 3s infinite linear alternate-reverse;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 1px); }
+            40% { transform: translate(-2px, -1px); }
+            60% { transform: translate(2px, 1px); }
+            80% { transform: translate(2px, -1px); }
+            100% { transform: translate(0); }
+        }
+
+        .liquid-hover {
+            position: relative;
+            overflow: hidden;
+        }
+        .liquid-hover::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(123, 208, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+        .liquid-hover:hover::after {
+            width: 300%;
+            height: 300%;
+        }
+
+        .scanline {
+            width: 100%;
+            height: 2px;
+            background: rgba(123, 208, 255, 0.2);
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: scan 4s linear infinite;
+        }
+        @keyframes scan {
+            from { top: 0%; }
+            to { top: 100%; }
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#201f23",
+                        "primary-fixed": "#e2e2e2",
+                        "secondary-fixed-dim": "#7bd0ff",
+                        "surface-tint": "#c6c6c7",
+                        "on-primary-fixed-variant": "#454747",
+                        "outline": "#8e9192",
+                        "on-primary-fixed": "#1a1c1c",
+                        "tertiary-fixed": "#e9ddff",
+                        "on-secondary-fixed-variant": "#004c69",
+                        "on-tertiary-fixed-variant": "#5516be",
+                        "surface-variant": "#353438",
+                        "inverse-on-surface": "#313034",
+                        "inverse-primary": "#5d5f5f",
+                        "secondary": "#7bd0ff",
+                        "primary-container": "#e2e2e2",
+                        "primary": "#ffffff",
+                        "surface-container-highest": "#353438",
+                        "on-tertiary-container": "#7342dd",
+                        "on-primary-container": "#636565",
+                        "background": "#131317",
+                        "error": "#ffb4ab",
+                        "surface-container-high": "#2a292e",
+                        "on-secondary": "#00354a",
+                        "on-secondary-fixed": "#001e2c",
+                        "on-background": "#e5e1e7",
+                        "surface-container-lowest": "#0e0e11",
+                        "secondary-fixed": "#c4e7ff",
+                        "on-surface": "#e5e1e7",
+                        "secondary-container": "#00a6e0",
+                        "on-tertiary-fixed": "#23005c",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "on-error-container": "#ffdad6",
+                        "outline-variant": "#444748",
+                        "on-error": "#690005",
+                        "surface-bright": "#39393d",
+                        "surface": "#131317",
+                        "on-tertiary": "#3c0091",
+                        "on-primary": "#2f3131",
+                        "on-surface-variant": "#c4c7c8",
+                        "inverse-surface": "#e5e1e7",
+                        "error-container": "#93000a",
+                        "on-secondary-container": "#00374d",
+                        "surface-container-low": "#1b1b1f",
+                        "surface-dim": "#131317",
+                        "tertiary-container": "#e9ddff",
+                        "tertiary-fixed-dim": "#d0bcff",
+                        "tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-desktop": "48px",
+                        "gutter": "24px",
+                        "terminal-height": "64px",
+                        "nav-height": "72px",
+                        "margin-mobile": "16px",
+                        "grid-pattern": "18px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Geist"],
+                        "display-hero-mobile": ["Geist"],
+                        "body-md": ["Geist"],
+                        "mono-data": ["Geist Mono"],
+                        "label-sm": ["Geist"],
+                        "display-hero": ["Geist"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["24px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "300"}],
+                        "display-hero-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "200"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "mono-data": ["13px", {"lineHeight": "1.5", "letterSpacing": "0px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                        "display-hero": ["48px", {"lineHeight": "1.1", "letterSpacing": "0.15em", "fontWeight": "200"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen overflow-hidden selection:bg-secondary/30">
+<!-- Environmental Texture -->
+<div class="fixed inset-0 grid-bg opacity-5 pointer-events-none"></div>
+<div class="fixed bottom-[-10%] right-[-10%] w-[50%] h-[50%] bg-secondary/5 blur-[120px] rounded-full animate-pulse pointer-events-none"></div>
+<div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-on-tertiary-container/5 blur-[120px] rounded-full pointer-events-none"></div>
+<!-- Top Navigation -->
+<nav class="fixed top-0 left-0 w-full h-[72px] z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop backdrop-blur-xl border-b border-white/10">
+<div class="flex items-center gap-6">
+<span class="font-display-hero-mobile text-display-hero-mobile tracking-tighter text-primary">LIFE.OS</span>
+<div class="hidden md:flex h-4 w-[1px] bg-white/20"></div>
+<span class="hidden md:block font-mono-data text-mono-data text-on-surface-variant uppercase tracking-widest">Archive // Redacted_Strata</span>
+</div>
+<div class="flex items-center gap-8">
+<button class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant hover:text-primary transition-colors flex items-center gap-2 group">
+<span class="material-symbols-outlined text-[18px] group-hover:-translate-x-1 transition-transform">arrow_back</span>
+                Return to Archive
+            </button>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer active:scale-95 duration-300">sync_alt</span>
+<span class="material-symbols-outlined text-primary cursor-pointer active:scale-95 duration-300">settings_input_component</span>
+</div>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pt-[72px] pb-[64px] h-screen w-full flex flex-col md:flex-row px-margin-mobile md:px-margin-desktop gap-gutter relative">
+<!-- Left: System Logs -->
+<aside class="hidden lg:flex flex-col w-64 py-8 gap-6 animate-fade-in">
+<div class="flex flex-col gap-2">
+<span class="font-label-sm text-label-sm text-secondary uppercase tracking-widest">Security Status</span>
+<div class="h-[1px] w-full bg-secondary/30"></div>
+</div>
+<div class="space-y-4 font-mono-data text-mono-data">
+<div class="flex flex-col">
+<span class="text-on-surface-variant/60">ENCRYPTION_STRENGTH</span>
+<span class="text-secondary">LEVEL_9 [CRITICAL]</span>
+</div>
+<div class="flex flex-col">
+<span class="text-on-surface-variant/60">ACCESS_RESTRICTED</span>
+<span class="text-error">PROTOCOL_X_ACTIVE</span>
+</div>
+<div class="flex flex-col">
+<span class="text-on-surface-variant/60">NODE_ORIGIN</span>
+<span class="text-primary">STRATA_DEEP_MEMORY</span>
+</div>
+</div>
+<div class="mt-auto glass-panel p-4 border-l-2 border-secondary">
+<p class="font-mono-data text-[11px] leading-relaxed text-on-surface-variant">
+                    &gt; Warning: Accessing redacted memories may cause temporal dissonance. Proceed with cognitive shielding active.
+                </p>
+</div>
+</aside>
+<!-- Center: Visualization & Puzzle -->
+<section class="flex-1 flex flex-col gap-gutter py-8 items-center">
+<!-- Data Fragment Visualization -->
+<div class="relative w-full max-w-[500px] aspect-[3/4] glass-panel overflow-hidden group cursor-crosshair">
+<div class="absolute inset-0 scanline z-10"></div>
+<!-- The "Locked" Preview -->
+<div class="absolute inset-0 bg-cover bg-center grayscale contrast-125 brightness-50 opacity-40 mix-blend-overlay transition-transform duration-[2000ms] group-hover:scale-110" data-alt="A heavily glitched and distorted digital memory fragment showing a blurred, shadowy human figure standing in a rain-slicked futuristic city alleyway. The image is rendered in high-contrast black and white with digital artifacts, scanlines, and chromatic aberration. Light reflects off wet surfaces in cold cyan tones, appearing through a dense layer of noise and encryption masks." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuClrOhXIpMlIyOQP4VPhNFaC8Vaq4taJVf1TnwB-C2WlEbZmCpf4K997dIGmGrVXPtI-IdcnR6DHQjT_KYLm259q9GmNJID2Tek-19KWmICspOefQp_WwBh8EmolFgATCivsEhtiA9O2nI3_Pml_-UdoypWTQybdpC97tK1Ay536kjetka_l72F_3bpXWsYOYD_rtzZ-t-mRhtibPT9U0KXHtcyl4GXighFwqQQmepTj7uc0KlzbuAM6lC0SgmWXOYwpUqBhuVg8tk')">
+</div>
+<!-- Glitch Overlays -->
+<div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+<div class="flex flex-col items-center gap-4">
+<span class="material-symbols-outlined text-[64px] text-secondary/40 animate-pulse">lock</span>
+<div class="font-display-hero-mobile text-display-hero-mobile tracking-[0.2em] glitch-text uppercase">REDACTED</div>
+<div class="font-mono-data text-mono-data text-secondary/60 text-center px-8">
+                            BIT_STREAM_CORRUPTED<br/>
+                            RECONSTRUCTION_REQUIRED
+                        </div>
+</div>
+</div>
+<!-- Corner Metadata -->
+<div class="absolute top-4 left-4 font-mono-data text-[10px] text-on-surface-variant uppercase">Fragment_ID: 0x882_SYNC</div>
+<div class="absolute bottom-4 right-4 font-mono-data text-[10px] text-on-surface-variant uppercase">Epoch: 2144.09.12</div>
+</div>
+<!-- Neural Puzzle Area -->
+<div class="w-full max-w-[500px] glass-panel p-6 flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-primary">Neural Alignment Required</span>
+<span class="font-mono-data text-mono-data text-secondary">SYNC: 42%</span>
+</div>
+<!-- Grid Simulation -->
+<div class="grid grid-cols-6 gap-2 h-32">
+<!-- JavaScript will populate or we can hardcode a few -->
+<script>
+                        document.write([...Array(24)].map((_, i) => `
+                            <div class="border border-white/5 hover:border-secondary/50 transition-colors flex items-center justify-center cursor-pointer group active:bg-secondary/10">
+                                <span class="font-mono-data text-[10px] text-on-surface-variant/40 group-hover:text-secondary">${Math.random().toString(16).substring(2, 4).toUpperCase()}</span>
+                            </div>
+                        `).join(''));
+                    </script>
+</div>
+<div class="flex justify-center">
+<div class="flex gap-1">
+<div class="w-12 h-1 bg-secondary"></div>
+<div class="w-12 h-1 bg-secondary"></div>
+<div class="w-12 h-1 bg-white/10"></div>
+<div class="w-12 h-1 bg-white/10"></div>
+<div class="w-12 h-1 bg-white/10"></div>
+</div>
+</div>
+</div>
+</section>
+<!-- Right: Decryption Terminal -->
+<aside class="flex flex-col w-full md:w-80 py-8 gap-8">
+<div class="glass-panel p-8 flex flex-col gap-8 relative overflow-hidden">
+<!-- Background Pulse -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-secondary/5 blur-3xl pointer-events-none"></div>
+<div class="flex flex-col gap-2">
+<span class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest">Access Cost</span>
+<div class="flex items-baseline gap-2">
+<span class="font-display-hero text-[40px] text-primary">1.00</span>
+<span class="font-mono-data text-secondary text-lg">CURIOUS_CREDIT</span>
+</div>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between font-mono-data text-mono-data py-2 border-b border-white/5">
+<span class="text-on-surface-variant">Your Balance</span>
+<span class="text-primary">14.20 CC</span>
+</div>
+<div class="flex justify-between font-mono-data text-mono-data py-2 border-b border-white/5">
+<span class="text-on-surface-variant">Processing Fee</span>
+<span class="text-primary">0.00 CC</span>
+</div>
+</div>
+<button class="w-full h-16 liquid-hover bg-primary text-background font-label-sm text-label-sm uppercase tracking-[0.2em] font-bold active:scale-[0.98] transition-all relative z-10 overflow-hidden">
+                    Commit Credits
+                </button>
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary text-[18px]">info</span>
+<p class="font-mono-data text-[10px] leading-relaxed text-on-surface-variant/80">
+                        Once committed, credits are non-refundable. Memory stabilization is not guaranteed for Tier 9 nodes.
+                    </p>
+</div>
+</div>
+<!-- Quick Status -->
+<div class="glass-panel p-6 flex flex-col gap-4">
+<span class="font-label-sm text-label-sm uppercase tracking-widest text-on-surface-variant">Terminal_Auth</span>
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full border border-secondary/30 flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A minimalist, highly stylized circular avatar of a human silhouette against a backdrop of complex digital neural networks and floating geometric data points. The color palette consists of deep charcoals and glowing electric cyan lines, representing a system administrator profile in an advanced AI-native operating system environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCvVJAHu2Xwlpx6Hx-uv8RZnhMNx9N9xWQuM9nZVd1GJhYgDl3rw1cZiq7cT3tO3RmHeEl6Gt2Hzaik-eZEfTqFAcmwxupXMentVNpzC-XL5Z6z9PyAgmzrVAAww5At3PUnJ2xWyRMIPCjh0IaZAPdb28xKJcNqzfQm-EFhMIXBfrepXHzkEMLT2Lwk5HxSMN1HtY1lwLbNmRewJGnIgQBosNa-OzcPCvWMbzWt_cCO_zQ1eaX_yXk33xgeLwk84Y4QmEeToQMDIh4"/>
+</div>
+<div class="flex flex-col">
+<span class="font-mono-data text-mono-data text-primary">ROOT_ACCESS</span>
+<span class="font-mono-data text-[10px] text-secondary">ALPHA-9-SYNC</span>
+</div>
+</div>
+</div>
+</aside>
+</main>
+<!-- Bottom Command Terminal -->
+<div class="fixed bottom-0 left-0 w-full h-terminal-height z-50 flex items-center px-margin-mobile md:px-margin-desktop bg-surface/90 backdrop-blur-md border-t border-secondary/30">
+<div class="flex items-center gap-4 w-full">
+<span class="material-symbols-outlined text-secondary">terminal</span>
+<span class="font-mono-data text-secondary">&gt;</span>
+<input class="bg-transparent border-none outline-none focus:ring-0 w-full font-mono-data text-mono-data text-secondary placeholder:text-secondary/30" placeholder="Enter decryption override command..." type="text"/>
+<div class="w-2 h-5 bg-secondary cursor-blink"></div>
+</div>
+<div class="hidden md:flex gap-8 items-center h-full">
+<div class="flex items-center gap-2 font-mono-data text-[11px] text-on-surface-variant/60">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+                SYSTEM_STABLE
+            </div>
+<div class="flex items-center gap-2 font-mono-data text-[11px] text-on-surface-variant/60 whitespace-nowrap">
+<span class="material-symbols-outlined text-[14px]">public</span>
+                LATENCY: 14MS
+            </div>
+</div>
+</div>
+<!-- UI Overlay Particles (Light Waves) -->
+<div class="fixed bottom-0 left-0 w-64 h-64 bg-secondary/5 blur-[100px] pointer-events-none"></div>
+<script>
+        // Micro-interaction for the data grid alignment
+        const gridItems = document.querySelectorAll('.grid > div');
+        gridItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const label = item.querySelector('span');
+                label.innerText = 'SYNC';
+                label.classList.add('text-secondary');
+                label.classList.add('animate-pulse');
+                item.classList.add('bg-secondary/10');
+                item.style.borderColor = 'rgba(123, 208, 255, 0.5)';
+            });
+        });
+
+        // Simple typing effect for terminal placeholder
+        const input = document.querySelector('input');
+        const commands = ["initialize decryption...", "force node access...", "scan memory strata...", "override security protocol x..."];
+        let cmdIdx = 0;
+        setInterval(() => {
+            cmdIdx = (cmdIdx + 1) % commands.length;
+            input.placeholder = commands[cmdIdx];
+        }, 4000);
+    </script>
+</body></html>

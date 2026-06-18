@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>OS.DESTINY | NARRATIVE_082_MED</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/geist-sans.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/geist-mono.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#7342dd",
+                    "tertiary-container": "#e9ddff",
+                    "on-tertiary-fixed": "#23005c",
+                    "on-error": "#690005",
+                    "outline": "#8e9192",
+                    "on-error-container": "#ffdad6",
+                    "on-primary-container": "#636565",
+                    "tertiary-fixed-dim": "#d0bcff",
+                    "surface-container-lowest": "#0e0e11",
+                    "inverse-on-surface": "#313034",
+                    "surface-bright": "#39393d",
+                    "primary-fixed": "#e2e2e2",
+                    "on-primary": "#2f3131",
+                    "surface-dim": "#131317",
+                    "on-surface": "#e5e1e7",
+                    "on-surface-variant": "#c4c7c8",
+                    "surface-tint": "#c6c6c7",
+                    "on-secondary-fixed-variant": "#004c69",
+                    "secondary-fixed": "#c4e7ff",
+                    "on-background": "#e5e1e7",
+                    "inverse-surface": "#e5e1e7",
+                    "surface-container-low": "#1b1b1f",
+                    "surface-container": "#201f23",
+                    "on-tertiary": "#3c0091",
+                    "primary-container": "#e2e2e2",
+                    "on-tertiary-fixed-variant": "#5516be",
+                    "secondary": "#7bd0ff",
+                    "background": "#131317",
+                    "on-primary-fixed-variant": "#454747",
+                    "surface-container-high": "#2a292e",
+                    "surface-container-highest": "#353438",
+                    "secondary-container": "#00a6e0",
+                    "tertiary": "#ffffff",
+                    "on-secondary": "#00354a",
+                    "inverse-primary": "#5d5f5f",
+                    "primary": "#ffffff",
+                    "surface": "#131317",
+                    "primary-fixed-dim": "#c6c6c7",
+                    "outline-variant": "#444748",
+                    "on-primary-fixed": "#1a1c1c",
+                    "tertiary-fixed": "#e9ddff",
+                    "error": "#ffb4ab",
+                    "secondary-fixed-dim": "#7bd0ff",
+                    "on-secondary-fixed": "#001e2c",
+                    "error-container": "#93000a",
+                    "surface-variant": "#353438",
+                    "on-secondary-container": "#00374d"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-desktop": "48px",
+                    "grid-pattern": "18px",
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "nav-height": "72px",
+                    "terminal-height": "64px"
+            },
+            "fontFamily": {
+                    "mono-data": ["Geist Mono"],
+                    "headline-lg": ["Geist"],
+                    "label-sm": ["Geist"],
+                    "display-hero": ["Geist"],
+                    "body-md": ["Geist"],
+                    "display-hero-mobile": ["Geist"]
+            },
+            "fontSize": {
+                    "mono-data": ["13px", {"lineHeight": "1.5", "letterSpacing": "0px", "fontWeight": "400"}],
+                    "headline-lg": ["24px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "300"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                    "display-hero": ["48px", {"lineHeight": "1.1", "letterSpacing": "0.15em", "fontWeight": "200"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "display-hero-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "200"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #131317;
+            overflow: hidden;
+            font-family: 'Geist', sans-serif;
+        }
+
+        .grid-overlay {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 18px 18px;
+            pointer-events: none;
+        }
+
+        .state-transition {
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .breath-glow {
+            animation: breathe 8s infinite ease-in-out;
+        }
+
+        @keyframes breathe {
+            0%, 100% { opacity: 0.02; transform: scale(1); }
+            50% { opacity: 0.08; transform: scale(1.1); }
+        }
+
+        .scan-line {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(123, 208, 255, 0.5), transparent);
+            position: absolute;
+            top: 0;
+            animation: scan 4s infinite linear;
+        }
+
+        @keyframes scan {
+            0% { top: 0%; }
+            100% { top: 100%; }
+        }
+
+        .data-stream {
+            height: 1px;
+            background: linear-gradient(90deg, #7bd0ff, #7342dd);
+            width: 0%;
+            animation: stream 2s infinite;
+        }
+
+        @keyframes stream {
+            0% { width: 0%; left: 0%; }
+            50% { width: 100%; left: 0%; }
+            100% { width: 0%; left: 100%; }
+        }
+
+        .card-inner-glow {
+            box-shadow: inset 0 0 40px rgba(0, 166, 224, 0.05);
+        }
+        
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="text-on-surface select-none">
+<!-- Atmospheric Layer -->
+<div class="fixed inset-0 grid-overlay z-0"></div>
+<div class="fixed -bottom-32 -left-32 w-96 h-96 rounded-full bg-secondary/10 blur-[120px] z-0 breath-glow" id="ambient-glow-l"></div>
+<div class="fixed -top-32 -right-32 w-96 h-96 rounded-full bg-on-tertiary-container/10 blur-[120px] z-0 breath-glow" id="ambient-glow-r" style="animation-delay: -4s;"></div>
+<!-- Top Navigation (Shared Component) -->
+<nav class="fixed top-0 w-full h-[72px] z-50 backdrop-blur-[20px] bg-surface/10 flex justify-between items-center px-gutter">
+<div class="flex items-center gap-4">
+<img alt="System Logo" class="h-8 w-8 invert brightness-200" src="https://lh3.googleusercontent.com/aida/AP1WRLuTuRFR6NaXeEtz4ifpaCr7vkv0uQIj1dX2_YF22xk3kPQc538KlOjQKCudhc2diZRT_alkMR226Qdviha_OGmSEI9S77MlY2dA66GlVfcanIs14L--0SHEWh0B-mvJO6_0TGAtoC9QLCZvLdylyXtyP6t2yxSEaDTrlWKEbsvcP0AttVFEv1Z6ktmCPSQDfKkZLtMzIpvis_qABxEzczwsjHkCaSv9U_J6-OzH8IX3jhxJEyuUK3c4QhA"/>
+<span class="font-headline-lg text-headline-lg font-light tracking-[0.2em] text-primary">OS.DESTINY</span>
+</div>
+<div class="hidden md:flex gap-12">
+<span class="text-on-surface-variant font-light opacity-50 text-mono-data tracking-widest cursor-pointer hover:opacity-100 transition-all">ARCHIVE</span>
+<span class="text-primary font-light border-b-[0.5px] border-secondary text-mono-data tracking-widest cursor-pointer">TIMELINE</span>
+<span class="text-on-surface-variant font-light opacity-50 text-mono-data tracking-widest cursor-pointer hover:opacity-100 transition-all">SYNC</span>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-primary-fixed-dim hover:text-secondary cursor-pointer transition-colors">power_settings_new</span>
+<span class="material-symbols-outlined text-primary-fixed-dim hover:text-secondary cursor-pointer transition-colors">settings_input_component</span>
+<span class="material-symbols-outlined text-primary-fixed-dim hover:text-secondary cursor-pointer transition-colors">history_edu</span>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="relative z-10 w-full h-screen flex items-center justify-center pt-[72px] pb-[terminal-height] px-gutter">
+<div class="w-full max-w-7xl grid grid-cols-1 md:grid-cols-12 gap-8 items-stretch">
+<!-- Left: Vital Metrics (Technical Side Panel) -->
+<aside class="md:col-span-3 flex flex-col gap-4">
+<div class="bg-surface-container-low/40 backdrop-blur-xl border-[0.5px] border-white/10 p-6 flex flex-col gap-8 flex-1">
+<div class="space-y-1">
+<p class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest">System Path</p>
+<p class="text-mono-data text-secondary font-mono-data">NARRATIVE_082_MED</p>
+</div>
+<div class="space-y-6">
+<!-- Metric: BPM -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase">Heart Rate</span>
+<span class="text-mono-data text-white/40">BPM</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-[56px] font-light leading-none state-transition text-secondary" id="val-bpm">72</span>
+<span class="text-mono-data text-[10px] uppercase border border-secondary/30 px-2 py-0.5 rounded-full text-secondary" id="rhythm-tag">Sinus Rhythm</span>
+</div>
+<div class="h-1 bg-white/5 relative overflow-hidden rounded-full">
+<div class="absolute inset-0 bg-secondary/50 state-transition" id="bar-bpm" style="width: 72%;"></div>
+</div>
+</div>
+<!-- Metric: SpO2 -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase">Oxygen Sat.</span>
+<span class="text-mono-data text-white/40">SpO2</span>
+</div>
+<div class="flex items-baseline gap-2">
+<span class="text-[56px] font-light leading-none state-transition text-primary" id="val-spo2">98</span>
+<span class="text-mono-data text-white/40">%</span>
+</div>
+<div class="h-1 bg-white/5 relative overflow-hidden rounded-full">
+<div class="absolute inset-0 bg-primary/50 state-transition" id="bar-spo2" style="width: 98%;"></div>
+</div>
+</div>
+</div>
+<div class="mt-auto pt-8 border-t border-white/5">
+<div class="flex items-center gap-3 mb-4">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-[0.2em]">Live Telemetry</span>
+</div>
+<div class="h-24 w-full bg-surface-container/60 rounded relative overflow-hidden">
+<div class="scan-line"></div>
+<canvas class="w-full h-full opacity-60" id="ecg-canvas"></canvas>
+</div>
+</div>
+</div>
+</aside>
+<!-- Center: Narrative Text Block -->
+<section class="md:col-span-6 flex flex-col items-center justify-center text-center px-12 gap-8">
+<div class="relative group bg-white/5 border border-white/10 backdrop-blur-2xl p-12 aspect-[3/4] max-h-[600px] w-full flex flex-col items-center justify-center state-transition card-inner-glow" id="narrative-card">
+<div class="absolute top-8 left-8 text-mono-data text-white/20 text-4xl font-extralight">01</div>
+<div class="space-y-6 max-w-md">
+<h2 class="text-headline-lg font-headline-lg tracking-[0.3em] uppercase state-transition" id="scenario-title">STABILIZATION_ACHIEVED</h2>
+<div class="h-[1px] w-12 bg-secondary mx-auto state-transition" id="scenario-line"></div>
+<p class="text-body-md font-body-md text-on-surface-variant leading-relaxed opacity-80 state-transition" id="scenario-text">
+                            The rhythm returns. A life preserved against the odds. The console stabilizes as neural synapses re-engage.
+                        </p>
+</div>
+<div class="absolute bottom-8 right-8 flex flex-col items-end">
+<span class="text-label-sm font-label-sm text-white/40 tracking-widest uppercase">Resolution Code</span>
+<span class="text-mono-data text-secondary state-transition" id="resolution-code">CODE_BLUE_NEGATED</span>
+</div>
+</div>
+<!-- Resolution Toggles (Custom Component) -->
+<div class="flex gap-4 p-1 bg-surface-container-highest rounded-full border border-white/5">
+<button class="px-6 py-2 rounded-full text-label-sm font-label-sm tracking-widest transition-all bg-secondary/10 text-secondary border border-secondary/20" id="btn-success" onclick="switchState('success')">SUCCESS</button>
+<button class="px-6 py-2 rounded-full text-label-sm font-label-sm tracking-widest transition-all text-on-surface-variant hover:text-white" id="btn-failure" onclick="switchState('failure')">FAILURE</button>
+</div>
+</section>
+<!-- Right: Session Actions & Metadata -->
+<aside class="md:col-span-3 flex flex-col gap-4">
+<div class="bg-surface-container-low/40 backdrop-blur-xl border-[0.5px] border-white/10 p-6 flex flex-col flex-1">
+<div class="space-y-1 mb-12">
+<p class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest">Protocol Version</p>
+<p class="text-mono-data text-on-surface/60 font-mono-data">v4.08.2-OMEGA</p>
+</div>
+<div class="space-y-8 flex-1">
+<div class="space-y-4">
+<p class="text-label-sm font-label-sm text-on-surface-variant uppercase tracking-widest">Final Actions</p>
+<button class="w-full group relative flex items-center justify-between p-4 border border-white/10 bg-white/5 hover:border-secondary transition-all">
+<span class="text-label-sm font-label-sm tracking-widest group-hover:text-secondary">ARCHIVE_SESSION</span>
+<span class="material-symbols-outlined text-sm group-hover:text-secondary">folder_zip</span>
+<div class="absolute inset-0 bg-secondary/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+</button>
+<button class="w-full group relative flex items-center justify-between p-4 border border-white/10 bg-white/5 hover:border-on-tertiary-container transition-all">
+<span class="text-label-sm font-label-sm tracking-widest group-hover:text-on-tertiary-container">TRANSMIT_LOGS</span>
+<span class="material-symbols-outlined text-sm group-hover:text-on-tertiary-container">satellite_alt</span>
+</button>
+</div>
+<div class="space-y-2 opacity-40">
+<p class="text-[10px] font-mono-data uppercase tracking-tighter">Diagnostic Data Stream</p>
+<div class="data-stream"></div>
+<div class="text-[10px] font-mono-data leading-tight space-y-1 overflow-hidden h-32">
+<div>[LOG] SYNCING_WITH_CENTRAL_HUB... DONE</div>
+<div>[LOG] VALIDATING_NARRATIVE_PATH... OK</div>
+<div>[LOG] CALCULATING_DESTINY_DELTA... +0.024</div>
+<div>[LOG] NEURAL_STAMP_APPLIED</div>
+<div>[LOG] BROADCASTING_RESOLUTION_82...</div>
+<div class="animate-pulse">_WAITING_FOR_USER_CONFIRMATION</div>
+</div>
+</div>
+</div>
+<div class="mt-auto">
+<div class="bg-primary/5 p-4 border-l-2 border-primary">
+<p class="text-[10px] text-primary/80 font-mono-data italic">"Death is a data point. Life is an anomaly we strive to repeat."</p>
+</div>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Bottom Command Terminal (Shared Component) -->
+<footer class="fixed bottom-0 left-0 w-full z-50 flex justify-center gap-12 items-center px-gutter pb-2 backdrop-blur-xl border-t-[1px] border-secondary/30 h-[terminal-height] bg-surface/80 shadow-[0_-4px_20px_rgba(0,166,224,0.1)]">
+<div class="hidden md:flex gap-12 items-center">
+<div class="flex items-center gap-2 text-on-surface-variant opacity-40 font-mono-data text-mono-data hover:opacity-80 transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">terminal</span>
+<span>DIAGNOSTICS</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant opacity-40 font-mono-data text-mono-data hover:opacity-80 transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">sync_alt</span>
+<span>SYNC_STREAM</span>
+</div>
+<div class="flex items-center gap-2 text-on-surface-variant opacity-40 font-mono-data text-mono-data hover:opacity-80 transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">database</span>
+<span>LOG_VIEWER</span>
+</div>
+<div class="flex items-center gap-2 text-secondary bg-secondary/10 px-4 py-1 rounded-full font-mono-data text-mono-data active:scale-95 transition-transform cursor-pointer">
+<span class="material-symbols-outlined text-[16px]">communities</span>
+<span>TERMINAL</span>
+</div>
+</div>
+<!-- Mobile View (Items count 4 from JSON) -->
+<div class="md:hidden flex justify-around w-full items-center">
+<span class="material-symbols-outlined text-secondary">terminal</span>
+<span class="material-symbols-outlined text-on-surface-variant">sync_alt</span>
+<span class="material-symbols-outlined text-on-surface-variant">database</span>
+<span class="material-symbols-outlined text-on-surface-variant">communities</span>
+</div>
+</footer>
+<script>
+        const ecgCanvas = document.getElementById('ecg-canvas');
+        const ctx = ecgCanvas.getContext('2d');
+        let width, height;
+        let points = [];
+        let currentState = 'success';
+
+        function resize() {
+            width = ecgCanvas.clientWidth;
+            height = ecgCanvas.clientHeight;
+            ecgCanvas.width = width;
+            ecgCanvas.height = height;
+        }
+
+        function createECG(isFlatline) {
+            points = [];
+            for (let i = 0; i < width; i++) {
+                points.push(height / 2);
+            }
+        }
+
+        let offset = 0;
+        function drawECG() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.beginPath();
+            ctx.strokeStyle = currentState === 'success' ? '#7bd0ff' : '#ffb4ab';
+            ctx.lineWidth = 1.5;
+            ctx.moveTo(0, height / 2);
+
+            for (let i = 0; i < width; i++) {
+                let y = height / 2;
+                if (currentState === 'success') {
+                    // Create spike pattern
+                    let cycle = (i + offset) % 100;
+                    if (cycle > 40 && cycle < 45) y -= 30; // P-wave
+                    if (cycle > 50 && cycle < 52) y += 10; // Q
+                    if (cycle > 52 && cycle < 55) y -= 60; // R
+                    if (cycle > 55 && cycle < 58) y += 20; // S
+                    if (cycle > 70 && cycle < 80) y -= 15; // T
+                } else {
+                    // Subtle erratic movement or flatline
+                    y += (Math.random() - 0.5) * 1;
+                }
+                ctx.lineTo(i, y);
+            }
+            ctx.stroke();
+            offset = (offset + 2) % 1000;
+            requestAnimationFrame(drawECG);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        createECG();
+        drawECG();
+
+        function switchState(state) {
+            currentState = state;
+            const bpm = document.getElementById('val-bpm');
+            const spo2 = document.getElementById('val-spo2');
+            const title = document.getElementById('scenario-title');
+            const text = document.getElementById('scenario-text');
+            const code = document.getElementById('resolution-code');
+            const line = document.getElementById('scenario-line');
+            const barBpm = document.getElementById('bar-bpm');
+            const barSpo2 = document.getElementById('bar-spo2');
+            const glowL = document.getElementById('ambient-glow-l');
+            const card = document.getElementById('narrative-card');
+            const rhythm = document.getElementById('rhythm-tag');
+            
+            const btnSuccess = document.getElementById('btn-success');
+            const btnFailure = document.getElementById('btn-failure');
+
+            if (state === 'success') {
+                bpm.innerText = '72';
+                bpm.className = 'text-[56px] font-light leading-none state-transition text-secondary';
+                spo2.innerText = '98';
+                title.innerText = 'STABILIZATION_ACHIEVED';
+                text.innerText = 'The rhythm returns. A life preserved against the odds. The console stabilizes as neural synapses re-engage.';
+                code.innerText = 'CODE_BLUE_NEGATED';
+                code.className = 'text-mono-data text-secondary state-transition';
+                line.className = 'h-[1px] w-12 bg-secondary mx-auto state-transition';
+                barBpm.style.width = '72%';
+                barBpm.className = 'absolute inset-0 bg-secondary/50 state-transition';
+                barSpo2.style.width = '98%';
+                glowL.className = 'fixed -bottom-32 -left-32 w-96 h-96 rounded-full bg-secondary/10 blur-[120px] z-0 breath-glow';
+                card.style.boxShadow = 'inset 0 0 40px rgba(0, 166, 224, 0.05)';
+                rhythm.innerText = 'Sinus Rhythm';
+                rhythm.className = 'text-mono-data text-[10px] uppercase border border-secondary/30 px-2 py-0.5 rounded-full text-secondary';
+                
+                btnSuccess.className = 'px-6 py-2 rounded-full text-label-sm font-label-sm tracking-widest transition-all bg-secondary/10 text-secondary border border-secondary/20';
+                btnFailure.className = 'px-6 py-2 rounded-full text-label-sm font-label-sm tracking-widest transition-all text-on-surface-variant hover:text-white';
+            } else {
+                bpm.innerText = '0';
+                bpm.className = 'text-[56px] font-light leading-none state-transition text-error';
+                spo2.innerText = '00';
+                title.innerText = 'SYSTEM_EXPIRATION';
+                text.innerText = 'The silence is final. The machine records the time of exit. A narrative branch concludes in total shadow.';
+                code.innerText = 'POST_MORTEM_INIT';
+                code.className = 'text-mono-data text-error state-transition';
+                line.className = 'h-[1px] w-12 bg-error mx-auto state-transition';
+                barBpm.style.width = '2%';
+                barBpm.className = 'absolute inset-0 bg-error/50 state-transition';
+                barSpo2.style.width = '0%';
+                glowL.className = 'fixed -bottom-32 -left-32 w-96 h-96 rounded-full bg-error/10 blur-[120px] z-0 breath-glow';
+                card.style.boxShadow = 'inset 0 0 40px rgba(255, 180, 171, 0.05)';
+                rhythm.innerText = 'Flatline';
+                rhythm.className = 'text-mono-data text-[10px] uppercase border border-error/30 px-2 py-0.5 rounded-full text-error';
+
+                btnSuccess.className = 'px-6 py-2 rounded-full text-label-sm font-label-sm tracking-widest transition-all text-on-surface-variant hover:text-white';
+                btnFailure.className = 'px-6 py-2 rounded-full text-label-sm font-label-sm tracking-widest transition-all bg-error/10 text-error border border-error/20';
+            }
+        }
+    </script>
+</body></html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="zh-CN"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Life.OS | NARRATIVE_082_MED</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#ffffff",
+                        "tertiary-fixed": "#e9ddff",
+                        "on-secondary-fixed-variant": "#004c69",
+                        "outline-variant": "#444748",
+                        "on-surface-variant": "#c4c7c8",
+                        "on-tertiary-container": "#7342dd",
+                        "surface-container-low": "#1b1b1f",
+                        "secondary": "#7bd0ff",
+                        "on-primary-fixed": "#1a1c1c",
+                        "surface-container-lowest": "#0e0e11",
+                        "secondary-container": "#00a6e0",
+                        "on-secondary": "#00354a",
+                        "primary-fixed": "#e2e2e2",
+                        "surface": "#131317",
+                        "inverse-on-surface": "#313034",
+                        "on-secondary-container": "#00374d",
+                        "on-primary": "#2f3131",
+                        "on-error": "#690005",
+                        "tertiary": "#ffffff",
+                        "on-tertiary-fixed-variant": "#5516be",
+                        "on-primary-container": "#636565",
+                        "primary-container": "#e2e2e2",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "on-background": "#e5e1e7",
+                        "inverse-primary": "#5d5f5f",
+                        "error": "#ffb4ab",
+                        "on-error-container": "#ffdad6",
+                        "inverse-surface": "#e5e1e7",
+                        "tertiary-fixed-dim": "#d0bcff",
+                        "surface-container-highest": "#353438",
+                        "on-primary-fixed-variant": "#454747",
+                        "on-tertiary": "#3c0091",
+                        "on-tertiary-fixed": "#23005c",
+                        "surface-dim": "#131317",
+                        "error-container": "#93000a",
+                        "surface-bright": "#39393d",
+                        "surface-container": "#201f23",
+                        "secondary-fixed": "#c4e7ff",
+                        "background": "#131317",
+                        "surface-variant": "#353438",
+                        "secondary-fixed-dim": "#7bd0ff",
+                        "surface-container-high": "#2a292e",
+                        "tertiary-container": "#e9ddff",
+                        "on-surface": "#e5e1e7",
+                        "on-secondary-fixed": "#001e2c",
+                        "surface-tint": "#c6c6c7",
+                        "outline": "#8e9192"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "nav-height": "72px",
+                        "grid-pattern": "18px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                        "terminal-height": "64px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "mono-data": ["Geist Mono", "monospace"],
+                        "label-sm": ["Geist", "sans-serif"],
+                        "display-hero": ["Geist", "sans-serif"],
+                        "body-md": ["Geist", "sans-serif"],
+                        "headline-lg": ["Geist", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "mono-data": ["13px", {"lineHeight": "1.5", "letterSpacing": "0px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                        "display-hero": ["48px", {"lineHeight": "1.1", "letterSpacing": "0.15em", "fontWeight": "200"}],
+                        "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "headline-lg": ["24px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "300"}]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: #131317;
+            overflow: hidden;
+            height: 100vh;
+        }
+        .grid-overlay {
+            background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 18px 18px;
+        }
+        .typewriter::after {
+            content: '_';
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+        .pulse-intense {
+            animation: pulse-rhythmic 0.8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+        }
+        @keyframes pulse-rhythmic {
+            0%, 100% { opacity: 0.4; filter: blur(2px); }
+            15% { opacity: 1; filter: blur(0px); }
+            30% { opacity: 0.6; filter: blur(1px); }
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .glass-card:hover {
+            background: rgba(123, 208, 255, 0.08);
+            border-color: rgba(123, 208, 255, 0.4);
+            transform: translateY(-4px);
+        }
+    </style>
+</head>
+<body class="font-body-md text-on-surface">
+<!-- Environmental Textures -->
+<div class="fixed inset-0 grid-overlay z-0 pointer-events-none"></div>
+<!-- Top Navigation -->
+<header class="flex justify-between items-center px-margin-desktop w-full h-nav-height fixed top-0 z-50 backdrop-blur-[20px] bg-surface/10">
+<div class="font-headline-lg text-headline-lg tracking-[0.15em] text-primary">Life.OS</div>
+<nav class="hidden md:flex items-center gap-gutter">
+<span class="text-primary font-bold font-body-md text-body-md cursor-default">ACT I: THE THRESHOLD</span>
+<div class="h-4 w-px bg-outline/20"></div>
+<div class="flex items-center gap-2 text-secondary font-mono-data text-mono-data">
+<span class="material-symbols-outlined text-[16px]">sync</span>
+                AI SYNC: ACTIVE
+            </div>
+</nav>
+<button class="text-on-surface-variant hover:text-secondary transition-colors duration-300 font-body-md text-body-md">
+            Sign In
+        </button>
+</header>
+<!-- Main Narrative Stage -->
+<main class="relative z-10 w-full h-full flex flex-col items-center justify-center px-6">
+<!-- ECG Spike Symbol -->
+<div class="mb-16 flex flex-col items-center">
+<img alt="ECG Spike" class="w-32 h-32 object-contain drop-shadow-[0_0_15px_rgba(123,208,255,0.4)] pulse-intense" src="https://lh3.googleusercontent.com/aida/AP1WRLuTuRFR6NaXeEtz4ifpaCr7vkv0uQIj1dX2_YF22xk3kPQc538KlOjQKCudhc2diZRT_alkMR226Qdviha_OGmSEI9S77MlY2dA66GlVfcanIs14L--0SHEWh0B-mvJO6_0TGAtoC9QLCZvLdylyXtyP6t2yxSEaDTrlWKEbsvcP0AttVFEv1Z6ktmCPSQDfKkZLtMzIpvis_qABxEzczwsjHkCaSv9U_J6-OzH8IX3jhxJEyuUK3c4QhA"/>
+<div class="mt-4 font-mono-data text-secondary text-[10px] tracking-[0.4em] opacity-60">NARRATIVE_082_MED</div>
+</div>
+<!-- Narrative Area -->
+<section class="max-w-4xl text-center">
+<h1 class="text-primary font-display-hero text-display-hero-mobile md:text-display-hero leading-relaxed tracking-[0.2em] typewriter min-h-[4em] transition-all" id="narrative-text">电流贯穿胸膛。寂静。一秒。两秒。监测仪上的直线开始剧烈跳动，扭曲成不规则的波峰。</h1>
+</section>
+<!-- Choice Cards -->
+<div class="mt-24 grid grid-cols-1 md:grid-cols-2 gap-gutter w-full max-w-3xl"><button class="glass-card p-10 flex flex-col items-center gap-4 group col-span-full border-secondary/40 animate-pulse">
+<div class="flex justify-between w-full items-center">
+<span class="font-mono-data text-secondary text-xs tracking-widest">PROTOCOL: EMERGENCY</span>
+<span class="material-symbols-outlined text-secondary group-hover:scale-110 transition-transform">medical_services</span>
+</div>
+<div class="text-primary text-xl font-headline-lg tracking-wider">推注肾上腺素 (Push Epinephrine)</div>
+<div class="text-on-surface-variant text-sm font-body-md leading-relaxed opacity-0 group-hover:opacity-100 transition-opacity">
+                    Force the heart into rhythm. Chemical restart sequence initiated.
+                </div>
+</button></div>
+</main>
+<!-- Vital Signs Panel -->
+<aside class="fixed right-margin-desktop top-1/2 -translate-y-1/2 z-20 flex flex-col gap-6 p-6 glass-card rounded-xl">
+<div class="flex flex-col">
+<span class="text-[10px] font-mono-data text-outline tracking-widest mb-1">HEART RATE (BPM)</span>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-mono-data text-secondary" id="heart-rate">42</span>
+<span class="material-symbols-outlined text-secondary text-sm mb-2" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+</div>
+<div class="w-full h-px bg-outline/10"></div>
+<div class="flex flex-col">
+<span class="text-[10px] font-mono-data text-outline tracking-widest mb-1">SPO2 (%)</span>
+<div class="flex items-end gap-2">
+<span class="text-3xl font-mono-data text-secondary-container" id="spo2">88</span>
+<span class="material-symbols-outlined text-secondary-container text-sm mb-2">waves</span>
+</div>
+</div>
+<div class="w-full h-px bg-outline/10"></div>
+<div class="flex flex-col">
+<span class="text-[10px] font-mono-data text-outline tracking-widest mb-1">SYSTEM STATUS</span>
+<div class="flex items-center gap-2 mt-1">
+<div class="w-2 h-2 rounded-full animate-pulse bg-secondary"></div>
+<span class="text-xs font-mono-data text-secondary uppercase">STABILIZING - NEURAL LINK ESTABLISHED</span>
+</div>
+</div>
+</aside>
+<!-- Bottom Command Terminal -->
+<footer class="fixed bottom-0 w-full z-50 flex items-center px-margin-desktop bg-surface-container-lowest/80 backdrop-blur-xl border-t border-on-secondary-fixed-variant/20 h-terminal-height">
+<div class="flex items-center gap-4 w-full">
+<span class="material-symbols-outlined text-secondary text-lg">terminal</span>
+<div class="flex-grow font-mono-data text-secondary text-mono-data flex items-center">
+<span class="opacity-50">SYS.MED_LOG:</span>
+<span class="ml-2">[SYSTEM]: Shock delivered. Sinus rhythm detected. Awaiting stabilization protocol...</span>
+<span class="ml-1 w-2 h-4 bg-secondary/50 animate-pulse"></span>
+</div>
+<div class="flex gap-8">
+<div class="flex flex-col items-end">
+<span class="text-[9px] text-outline font-mono-data">TIME_LOC</span>
+<span class="text-xs font-mono-data text-on-surface">03:04:12 AM</span>
+</div>
+<div class="flex flex-col items-end">
+<span class="text-[9px] text-outline font-mono-data">CPU_LOAD</span>
+<span class="text-xs font-mono-data text-on-surface">14%</span>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Typewriter Effect
+        const text = "凌晨三点的急诊室，只有除颤仪充电的啸叫声。";
+        const target = document.getElementById('narrative-text');
+        let index = 0;
+
+        function type() {
+            if (index < text.length) {
+                target.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(type, 100);
+            }
+        }
+
+        // Fluctuating Vital Signs
+        function updateVitals() {
+            const hr = document.getElementById('heart-rate');
+            const spo2 = document.getElementById('spo2');
+            
+            setInterval(() => {
+                const currentHR = parseInt(hr.innerText);
+                const currentSP = parseInt(spo2.innerText);
+                
+                hr.innerText = Math.max(130, Math.min(165, currentHR + (Math.random() > 0.5 ? 2 : -2)));
+                spo2.innerText = Math.max(82, Math.min(91, currentSP + (Math.random() > 0.5 ? 1 : -1)));
+            }, 800);
+        }
+
+        window.onload = () => {
+            setTimeout(type, 1000);
+            updateVitals();
+        };
+
+        // Micro-interaction for hover glow
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.setProperty('--mouse-x', `${x}px`);
+                card.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body></html>

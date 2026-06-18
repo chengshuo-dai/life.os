@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Life.OS - Narrative 404: The 99th Floor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/geist-mono.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/geist-sans.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-lowest": "#0e0e11",
+                        "tertiary-container": "#e9ddff",
+                        "on-secondary-fixed-variant": "#004c69",
+                        "on-primary-container": "#636565",
+                        "on-error-container": "#ffdad6",
+                        "inverse-primary": "#5d5f5f",
+                        "tertiary-fixed-dim": "#d0bcff",
+                        "surface-container-high": "#2a292e",
+                        "surface-container-low": "#1b1b1f",
+                        "surface": "#131317",
+                        "on-tertiary-fixed-variant": "#5516be",
+                        "on-primary-fixed": "#1a1c1c",
+                        "on-background": "#e5e1e7",
+                        "background": "#131317",
+                        "on-secondary-fixed": "#001e2c",
+                        "secondary-container": "#00a6e0",
+                        "tertiary-fixed": "#e9ddff",
+                        "on-error": "#690005",
+                        "on-tertiary-fixed": "#23005c",
+                        "error-container": "#93000a",
+                        "on-tertiary-container": "#7342dd",
+                        "on-surface": "#e5e1e7",
+                        "outline": "#8e9192",
+                        "surface-container-highest": "#353438",
+                        "secondary-fixed": "#c4e7ff",
+                        "secondary": "#7bd0ff",
+                        "on-surface-variant": "#c4c7c8",
+                        "on-secondary-container": "#00374d",
+                        "surface-bright": "#39393d",
+                        "surface-container": "#201f23",
+                        "primary": "#ffffff",
+                        "surface-variant": "#353438",
+                        "on-primary-fixed-variant": "#454747",
+                        "tertiary": "#ffffff",
+                        "primary-container": "#e2e2e2",
+                        "on-secondary": "#00354a",
+                        "on-tertiary": "#3c0091",
+                        "inverse-on-surface": "#313034",
+                        "primary-fixed": "#e2e2e2",
+                        "on-primary": "#2f3131",
+                        "surface-dim": "#131317",
+                        "secondary-fixed-dim": "#7bd0ff",
+                        "surface-tint": "#c6c6c7",
+                        "primary-fixed-dim": "#c6c6c7",
+                        "error": "#ffb4ab",
+                        "outline-variant": "#444748",
+                        "inverse-surface": "#e5e1e7"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-desktop": "48px",
+                        "nav-height": "72px",
+                        "grid-pattern": "18px",
+                        "gutter": "24px",
+                        "terminal-height": "64px",
+                        "margin-mobile": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Geist"],
+                        "mono-data": ["Geist Mono"],
+                        "label-sm": ["Geist"],
+                        "display-hero-mobile": ["Geist"],
+                        "display-hero": ["Geist"],
+                        "headline-lg": ["Geist"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                        "mono-data": ["13px", {"lineHeight": "1.5", "letterSpacing": "0px", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                        "display-hero-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "200"}],
+                        "display-hero": ["48px", {"lineHeight": "1.1", "letterSpacing": "0.15em", "fontWeight": "200"}],
+                        "headline-lg": ["24px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "300"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #131317;
+            overflow-x: hidden;
+            color: #e5e1e7;
+        }
+
+        .environmental-grid {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+            background-size: 18px 18px;
+            pointer-events: none;
+        }
+
+        .liquid-hover {
+            position: relative;
+            overflow: hidden;
+            transition: border-width 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .liquid-hover::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(123, 208, 255, 0.1);
+            transform: scale(0);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            border-radius: inherit;
+            z-index: -1;
+        }
+
+        .liquid-hover:hover::after {
+            transform: scale(1.5);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 0.5px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-card:hover {
+            border-color: rgba(123, 208, 255, 0.4);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        @keyframes breathing-glow {
+            0%, 100% { opacity: 0.02; transform: scale(1); }
+            50% { opacity: 0.08; transform: scale(1.1); }
+        }
+
+        .breathing-light {
+            animation: breathing-glow 8s ease-in-out infinite;
+        }
+
+        .terminal-cursor::after {
+            content: '_';
+            animation: blink 1s step-end infinite;
+        }
+
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .fractured-logo {
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md selection:bg-secondary/30">
+<!-- Atmospheric Layers -->
+<div class="fixed inset-0 environmental-grid z-0"></div>
+<div class="fixed -bottom-1/4 -right-1/4 w-1/2 h-1/2 bg-secondary/10 rounded-full blur-[160px] breathing-light z-0"></div>
+<div class="fixed -bottom-1/4 -left-1/4 w-1/2 h-1/2 bg-tertiary-container/5 rounded-full blur-[160px] breathing-light z-0" style="animation-delay: -4s;"></div>
+<!-- Top Navigation -->
+<nav class="bg-transparent dark:bg-transparent h-nav-height w-full fixed top-0 z-50 backdrop-blur-[20px] bg-surface/10 flex justify-between items-center px-margin-desktop transition-all duration-500">
+<div class="flex items-center gap-4">
+<img alt="Life.OS Logo" class="h-8 w-8 fractured-logo" src="https://lh3.googleusercontent.com/aida/AP1WRLuFq38gjAEOVpkPCL6_wnzZTOfKqcZc-pyKuo4yem7BWyGFY08PBDHJsOVJHbHqTKaojt-0q1ZED5N2PraPMPQ5eycM1h-FhTTlaJGlvsebstMz8HJQxToEDu6C4gFe6iRE29QW27U81rX2mUF-HhGF2jA7hMdBe2_3O66OV2TtPk9PmRlHT6xVNQI-qdbMhlj7YJkPBrkPqX_dodlrF_vD0qF0BHMbsriJovpfiHIjpQZjlGufubmz8g"/>
+<span class="font-headline-lg text-headline-lg tracking-[0.15em] text-primary dark:text-primary">Life.OS</span>
+</div>
+<div class="hidden md:flex items-center gap-8">
+<a class="text-primary font-bold hover:text-secondary transition-colors duration-300" href="#">NARRATIVE 404</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">CORE SYSTEM</a>
+<a class="text-on-surface-variant hover:text-secondary transition-colors duration-300" href="#">ARCHIVE</a>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4 text-outline">
+<span class="material-symbols-outlined text-[18px]">power_settings_new</span>
+<span class="material-symbols-outlined text-[18px]">sync</span>
+<span class="material-symbols-outlined text-[18px]">timeline</span>
+</div>
+<button class="text-primary hover:text-secondary transition-colors duration-300 font-body-md">Sign In</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="relative z-10 min-h-screen pt-nav-height pb-terminal-height px-margin-mobile md:px-margin-desktop flex flex-col items-center justify-center">
+<!-- Chapter Header -->
+<header class="text-center mb-16 space-y-4">
+<p class="font-mono-data text-mono-data text-secondary uppercase tracking-widest opacity-80">Location: Floor 99 // District 01</p>
+<h1 class="font-display-hero text-display-hero-mobile md:text-display-hero text-primary max-w-4xl mx-auto leading-tight">
+                Narrative 404: The 99th Floor
+            </h1>
+<div class="h-px w-24 bg-gradient-to-r from-transparent via-primary/30 to-transparent mx-auto mt-8"></div>
+</header>
+<!-- The Central Mandate -->
+<section class="mb-20 text-center">
+<div class="inline-block p-12 glass-card rounded-sm border-white/10">
+<h2 class="text-[42px] md:text-[64px] font-bold tracking-tighter text-white opacity-90 mb-4" style="letter-spacing: -0.05em;">
+                    优化是唯一的生存之道。
+                </h2>
+<p class="font-mono-data text-mono-data text-outline mt-4 italic">
+                    "Optimization is the only way to survive."
+                </p>
+</div>
+</section>
+<!-- Narrative Interaction Cards -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter w-full max-w-5xl">
+<!-- Choice A: Accept -->
+<div class="glass-card aspect-[3/4] p-8 flex flex-col justify-between group cursor-pointer hover:-translate-y-2">
+<div class="space-y-4">
+<span class="font-mono-data text-headline-lg text-primary/20 group-hover:text-secondary/40 transition-colors">01</span>
+<h3 class="font-headline-lg text-primary">Accept Performance Plan</h3>
+<p class="text-on-surface-variant leading-relaxed">
+                        Surrender your metabolic cycles to the 99th floor's efficiency engine. Continuous refinement is required. Your identity will be restructured for maximum output.
+                    </p>
+</div>
+<button class="w-full py-4 border border-white/10 liquid-hover text-primary font-label-sm uppercase tracking-widest group-hover:border-secondary/50">
+                    Execute Alignment
+                </button>
+</div>
+<!-- Choice B: Severance -->
+<div class="glass-card aspect-[3/4] p-8 flex flex-col justify-between group cursor-pointer hover:-translate-y-2">
+<div class="space-y-4">
+<span class="font-mono-data text-headline-lg text-primary/20 group-hover:text-error/40 transition-colors">02</span>
+<h3 class="font-headline-lg text-primary">Review Severance Package</h3>
+<p class="text-on-surface-variant leading-relaxed">
+                        Initiate departure protocol. The exit is clean, quiet, and final. You will be erased from the floor's memory grid. No data remains. No legacy persists.
+                    </p>
+</div>
+<button class="w-full py-4 border border-white/10 liquid-hover text-primary font-label-sm uppercase tracking-widest group-hover:border-error/50">
+                    Initiate Exit
+                </button>
+</div>
+</div>
+<!-- Ambient Metadata -->
+<div class="mt-24 w-full max-w-5xl flex flex-col md:flex-row justify-between items-end gap-8 border-t border-white/5 pt-8 mb-12">
+<div class="space-y-2">
+<div class="flex items-center gap-2 text-secondary">
+<span class="w-2 h-2 rounded-full bg-secondary shadow-[0_0_8px_rgba(123,208,255,1)]"></span>
+<span class="font-mono-data text-label-sm uppercase">Evaluation in Progress</span>
+</div>
+<p class="text-on-surface-variant text-body-md max-w-md">
+                    Subject: Employee #8841-B. Sentiment analysis confirms elevated cortisol levels. Efficiency drop detected in sector 4.
+                </p>
+</div>
+<div class="flex gap-12 font-mono-data text-mono-data text-outline">
+<div>
+<span class="block text-primary/40 text-[10px] uppercase">Integrity</span>
+<span>84.2%</span>
+</div>
+<div>
+<span class="block text-primary/40 text-[10px] uppercase">Compliance</span>
+<span>100%</span>
+</div>
+<div>
+<span class="block text-primary/40 text-[10px] uppercase">Retention</span>
+<span>CRITICAL</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Glass Command Terminal -->
+<footer class="fixed bottom-0 w-full z-50 h-terminal-height bg-surface-container-lowest/80 backdrop-blur-xl border-t border-secondary/30 flex items-center px-margin-desktop shadow-[0_-4px_24px_rgba(0,166,224,0.1)]">
+<div class="flex items-center gap-4 w-full">
+<span class="material-symbols-outlined text-secondary drop-shadow-[0_0_8px_rgba(123,208,255,0.5)]">terminal</span>
+<div class="relative flex-grow h-full flex items-center">
+<input class="w-full bg-transparent border-none focus:ring-0 text-secondary font-mono-data text-mono-data placeholder:text-outline/50" id="command-input" placeholder="Enter retrieval command..." type="text"/>
+<div class="absolute right-0 flex items-center gap-4 text-outline/50 text-[10px] font-mono-data">
+<span>PATH: CORPORATE/CH_01</span>
+<span class="terminal-cursor"></span>
+</div>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interactions
+        const input = document.getElementById('command-input');
+        input.addEventListener('focus', () => {
+            input.parentElement.parentElement.classList.add('border-secondary');
+        });
+        input.addEventListener('blur', () => {
+            input.parentElement.parentElement.classList.remove('border-secondary');
+        });
+
+        // Add subtle scale interaction for active states
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => {
+                btn.style.transform = 'scale(0.98)';
+            });
+            btn.addEventListener('mouseup', () => {
+                btn.style.transform = 'scale(1)';
+            });
+        });
+
+        // Parallax-ish effect for glass cards
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.glass-card');
+            const x = (window.innerWidth / 2 - e.pageX) / 100;
+            const y = (window.innerHeight / 2 - e.pageY) / 100;
+            
+            cards.forEach(card => {
+                card.style.transform = `translateX(${x}px) translateY(${y}px)`;
+            });
+        });
+    </script>
+</body></html>

@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>DESTINY_OS | System Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/font-mono.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/font-sans.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "tertiary": "#ffffff",
+                    "primary-container": "#e2e2e2",
+                    "on-secondary": "#00354a",
+                    "surface-variant": "#353438",
+                    "on-primary-fixed-variant": "#454747",
+                    "primary": "#ffffff",
+                    "surface-bright": "#39393d",
+                    "surface-container": "#201f23",
+                    "on-secondary-container": "#00374d",
+                    "outline-variant": "#444748",
+                    "inverse-surface": "#e5e1e7",
+                    "surface-tint": "#c6c6c7",
+                    "primary-fixed-dim": "#c6c6c7",
+                    "error": "#ffb4ab",
+                    "surface-dim": "#131317",
+                    "secondary-fixed-dim": "#7bd0ff",
+                    "on-primary": "#2f3131",
+                    "on-tertiary": "#3c0091",
+                    "inverse-on-surface": "#313034",
+                    "primary-fixed": "#e2e2e2",
+                    "on-background": "#e5e1e7",
+                    "background": "#131317",
+                    "on-secondary-fixed": "#001e2c",
+                    "on-tertiary-fixed-variant": "#5516be",
+                    "on-primary-fixed": "#1a1c1c",
+                    "surface": "#131317",
+                    "surface-container-low": "#1b1b1f",
+                    "tertiary-fixed-dim": "#d0bcff",
+                    "surface-container-high": "#2a292e",
+                    "on-primary-container": "#636565",
+                    "on-error-container": "#ffdad6",
+                    "inverse-primary": "#5d5f5f",
+                    "surface-container-lowest": "#0e0e11",
+                    "tertiary-container": "#e9ddff",
+                    "on-secondary-fixed-variant": "#004c69",
+                    "secondary": "#7bd0ff",
+                    "on-surface-variant": "#c4c7c8",
+                    "outline": "#8e9192",
+                    "surface-container-highest": "#353438",
+                    "secondary-fixed": "#c4e7ff",
+                    "on-surface": "#e5e1e7",
+                    "on-tertiary-container": "#7342dd",
+                    "on-tertiary-fixed": "#23005c",
+                    "error-container": "#93000a",
+                    "secondary-container": "#00a6e0",
+                    "tertiary-fixed": "#e9ddff",
+                    "on-error": "#690005"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "terminal-height": "64px",
+                    "gutter": "24px",
+                    "grid-pattern": "18px",
+                    "nav-height": "72px",
+                    "margin-desktop": "48px"
+            },
+            "fontFamily": {
+                    "display-hero": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "mono-data": ["Geist Mono"],
+                    "label-sm": ["Geist"],
+                    "display-hero-mobile": ["Geist"],
+                    "body-md": ["Geist"]
+            },
+            "fontSize": {
+                    "display-hero": ["48px", {"lineHeight": "1.1", "letterSpacing": "0.15em", "fontWeight": "200"}],
+                    "headline-lg": ["24px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "300"}],
+                    "mono-data": ["13px", {"lineHeight": "1.5", "letterSpacing": "0px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                    "display-hero-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "200"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #131317;
+            color: #e5e1e7;
+            overflow-x: hidden;
+            font-family: 'Geist', sans-serif;
+        }
+
+        .scanlines {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%),
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 100, 0.02));
+            background-size: 100% 4px, 3px 100%;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.3;
+        }
+
+        .grid-bg {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 18px 18px;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .glass-panel:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(123, 208, 255, 0.3);
+        }
+
+        .glitch-avatar {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glitch-avatar::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(123, 208, 255, 0.1) 2px);
+            pointer-events: none;
+        }
+
+        .terminal-scroll::-webkit-scrollbar {
+            width: 4px;
+        }
+        .terminal-scroll::-webkit-scrollbar-thumb {
+            background: rgba(123, 208, 255, 0.2);
+            border-radius: 2px;
+        }
+
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+        .animate-pulse-slow {
+            animation: pulse-slow 3s infinite;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body class="grid-bg min-h-screen">
+<div class="scanlines"></div>
+<!-- TopNavBar -->
+<nav class="fixed top-0 w-full h-nav-height z-[60] backdrop-blur-xl bg-surface/10 border-b border-outline-variant/20 flex justify-between items-center px-margin-mobile md:px-margin-desktop">
+<div class="flex items-center gap-4">
+<span class="font-display-hero-mobile text-display-hero-mobile tracking-tighter text-primary">DESTINY_OS</span>
+<div class="hidden md:flex items-center gap-6 ml-12">
+<a class="text-on-surface-variant hover:text-primary transition-colors font-mono-data text-mono-data uppercase tracking-widest" href="#">Archive</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-mono-data text-mono-data uppercase tracking-widest" href="#">Console</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-mono-data text-mono-data uppercase tracking-widest" href="#">Paths</a>
+<a class="text-secondary border-b border-secondary pb-1 font-mono-data text-mono-data uppercase tracking-widest" href="#">Profile</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer active:scale-95 hover:bg-white/5 p-2 transition-all duration-300">sync</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer active:scale-95 hover:bg-white/5 p-2 transition-all duration-300">settings</span>
+<span class="material-symbols-outlined text-primary cursor-pointer active:scale-95 hover:bg-white/5 p-2 transition-all duration-300">power_settings_new</span>
+</div>
+</nav>
+<!-- Main Container -->
+<main class="pt-[92px] pb-[84px] px-margin-mobile md:px-margin-desktop max-w-[1440px] mx-auto min-h-screen grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Left Sidebar: User Identity -->
+<aside class="md:col-span-3 flex flex-col gap-6">
+<div class="glass-panel p-6 flex flex-col items-center text-center">
+<div class="w-32 h-32 glitch-avatar rounded-none bg-surface-container-highest border border-white/10 mb-4 relative">
+<img class="w-full h-full object-cover grayscale opacity-80" data-alt="A futuristic, digital glitch-art portrait of a synthetic human profile. The face is partially fragmented into glowing cyan pixels and vertical data streams. The lighting is moody and noir-inspired, set against a dark, tech-infused background consistent with the DESTINY_OS aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6QrGrLqAZWvmDna89VlczzphK5DXV6Ko4KxdPy_l_DGFO_osM21sCmCIErW6TxjSFDrCz1hLTHMMQ1eAGPdD5TEdHKat2AOyWvpxFfk-p0LKLXGGYPOJdqcmey-64fnUKSJ-TlegKc9Wf5hFHgiEqUD4rV2A1rJh6m7e9Rznqlc2Ag0HEh_qrqs_08dsOVKqsfdvn7QBUYx9qWvDYSXZG-ls5xegm-SAHaxkVGgilO22bxPbkGDXU8KQTeIaUlAMeydCDri-efCU"/>
+<div class="absolute inset-0 border border-secondary/20 animate-pulse"></div>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-primary tracking-tighter">OPERATOR_NULL</h2>
+<div class="mt-2 inline-flex items-center px-2 py-1 bg-secondary/10 border border-secondary/30 rounded-sm">
+<span class="w-1.5 h-1.5 bg-secondary rounded-full mr-2 animate-pulse"></span>
+<span class="font-mono-data text-[10px] text-secondary uppercase tracking-widest">ROOT_ACCESS</span>
+</div>
+<div class="mt-4 font-mono-data text-mono-data text-on-surface-variant/60">
+                    ID: ALPHA-9-SYNC
+                </div>
+</div>
+<!-- System Protocols -->
+<div class="glass-panel p-4">
+<h3 class="font-mono-data text-label-sm text-on-surface-variant uppercase tracking-[0.2em] mb-4 px-2 opacity-50">System Protocols</h3>
+<nav class="flex flex-col gap-1">
+<button class="w-full flex items-center justify-between px-3 py-3 rounded-sm hover:bg-white/5 transition-all group">
+<span class="font-mono-data text-mono-data text-on-surface group-hover:text-secondary transition-colors">Sync Settings</span>
+<span class="material-symbols-outlined text-[18px] opacity-40 group-hover:opacity-100 transition-opacity">tune</span>
+</button>
+<button class="w-full flex items-center justify-between px-3 py-3 rounded-sm hover:bg-white/5 transition-all group border-l-2 border-secondary bg-secondary/5">
+<span class="font-mono-data text-mono-data text-secondary">Security Clearances</span>
+<span class="material-symbols-outlined text-[18px] text-secondary">verified_user</span>
+</button>
+<button class="w-full flex items-center justify-between px-3 py-3 rounded-sm hover:bg-white/5 transition-all group">
+<span class="font-mono-data text-mono-data text-on-surface group-hover:text-secondary transition-colors">Neural Dampening</span>
+<span class="material-symbols-outlined text-[18px] opacity-40 group-hover:opacity-100 transition-opacity">neurology</span>
+</button>
+<button class="w-full flex items-center justify-between px-3 py-3 rounded-sm hover:bg-white/5 transition-all group">
+<span class="font-mono-data text-mono-data text-on-surface group-hover:text-secondary transition-colors">Destiny Export</span>
+<span class="material-symbols-outlined text-[18px] opacity-40 group-hover:opacity-100 transition-opacity">ios_share</span>
+</button>
+</nav>
+</div>
+</aside>
+<!-- Main Dashboard -->
+<section class="md:col-span-9 flex flex-col gap-6">
+<!-- Top Row: Data Readouts -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<!-- Curious Credits -->
+<div class="glass-panel p-8 relative overflow-hidden group">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl">account_balance_wallet</span>
+</div>
+<div class="font-mono-data text-label-sm text-on-surface-variant uppercase tracking-widest mb-4">CURIOUS_CREDITS</div>
+<div class="flex items-baseline gap-2">
+<span class="font-display-hero text-display-hero text-secondary">14.20</span>
+<span class="font-mono-data text-headline-lg text-secondary/60">CC</span>
+</div>
+<div class="mt-6 flex items-center gap-4">
+<div class="h-1 flex-1 bg-surface-container-highest overflow-hidden">
+<div class="h-full bg-secondary w-2/3 shadow-[0_0_10px_rgba(123,208,255,0.5)]"></div>
+</div>
+<span class="font-mono-data text-[10px] text-on-surface-variant/40">LIMIT: 20.00</span>
+</div>
+</div>
+<!-- Reality Sync -->
+<div class="glass-panel p-8 flex items-center justify-between group">
+<div>
+<div class="font-mono-data text-label-sm text-on-surface-variant uppercase tracking-widest mb-4">REALITY_SYNC</div>
+<div class="font-display-hero text-display-hero text-primary">84.6<span class="text-headline-lg opacity-40">%</span></div>
+<div class="mt-4 flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
+<span class="font-mono-data text-mono-data text-secondary/80">STABLE_OS_LINK</span>
+</div>
+</div>
+<div class="relative w-24 h-24">
+<svg class="w-full h-full -rotate-90" viewbox="0 0 36 36">
+<path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"></path>
+<path class="drop-shadow-[0_0_5px_rgba(123,208,255,0.8)]" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#7bd0ff" stroke-dasharray="84.6, 100" stroke-width="1"></path>
+</svg>
+<div class="absolute inset-0 flex items-center justify-center opacity-20">
+<span class="material-symbols-outlined text-3xl">hub</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Middle Row: Path Synchronicity -->
+<div class="glass-panel p-8">
+<div class="flex justify-between items-end mb-8">
+<div>
+<h3 class="font-headline-lg text-headline-lg text-primary tracking-tight">Path Synchronicity</h3>
+<p class="font-mono-data text-mono-data text-on-surface-variant/60">Real-time narrative alignment metrics</p>
+</div>
+<div class="font-mono-data text-label-sm text-secondary/80 border border-secondary/30 px-3 py-1 bg-secondary/5">
+                        AUTO_RECALIBRATING...
+                    </div>
+</div>
+<div class="space-y-8">
+<!-- Path 1 -->
+<div class="space-y-3">
+<div class="flex justify-between items-center font-mono-data text-mono-data">
+<span class="text-on-surface uppercase tracking-wider">NARRATIVE_082_MED</span>
+<span class="text-secondary">74%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest relative">
+<div class="absolute h-full bg-secondary shadow-[0_0_12px_#7bd0ff]" style="width: 74%"></div>
+<div class="absolute h-full bg-white/20 w-px animate-ping" style="left: 74%"></div>
+</div>
+</div>
+<!-- Path 2 -->
+<div class="space-y-3">
+<div class="flex justify-between items-center font-mono-data text-mono-data">
+<span class="text-on-surface uppercase tracking-wider">NARRATIVE_115_CORP</span>
+<span class="text-secondary">100%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest relative">
+<div class="absolute h-full bg-secondary shadow-[0_0_12px_#7bd0ff]" style="width: 100%"></div>
+<div class="absolute top-1/2 -translate-y-1/2 right-0">
+<span class="material-symbols-outlined text-secondary text-[16px]">check_circle</span>
+</div>
+</div>
+</div>
+<!-- Path 3 -->
+<div class="space-y-3">
+<div class="flex justify-between items-center font-mono-data text-mono-data">
+<span class="text-on-surface uppercase tracking-wider">NARRATIVE_401_FREE</span>
+<span class="text-secondary">22%</span>
+</div>
+<div class="w-full h-1 bg-surface-container-highest relative">
+<div class="absolute h-full bg-on-surface-variant/40" style="width: 22%"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Row: System Logs -->
+<div class="glass-panel overflow-hidden border-secondary/20">
+<div class="bg-surface-container-low px-4 py-2 border-b border-white/5 flex justify-between items-center">
+<div class="flex gap-2">
+<div class="w-2.5 h-2.5 rounded-full bg-error/20 border border-error/40"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-secondary/20 border border-secondary/40"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-on-surface-variant/20 border border-on-surface-variant/40"></div>
+</div>
+<div class="font-mono-data text-[10px] text-on-surface-variant/40 uppercase tracking-widest">Console :: Alpha-9-Terminal</div>
+</div>
+<div class="p-6 h-48 overflow-y-auto terminal-scroll font-mono-data text-mono-data space-y-1" id="terminal-logs">
+<p class="text-secondary/60">Initializing Destiny Terminal v4.0.2...</p>
+<p class="text-on-surface-variant/40">[TIMESTAMP: 2024.03.14_10:04:12]</p>
+<p class="text-on-surface-variant">LOG_EVENT: Narrative '115_CORP' reached 100% synchronization.</p>
+<p class="text-secondary">TRANS_DEBIT: -0.40 CC | Narrative Interaction Fee</p>
+<p class="text-on-surface-variant">LOG_EVENT: Operator spatial repositioning detected (Sector-7).</p>
+<p class="text-secondary">TRANS_CREDIT: +2.00 CC | Daily Existence Quota</p>
+<p class="text-on-surface-variant/40">[TIMESTAMP: 2024.03.14_10:05:01]</p>
+<p class="text-on-surface-variant">LOG_EVENT: Reality Sync stabilizing at 84.6%.</p>
+<p class="text-error">WARN: Neural Dampening levels dropping below threshold.</p>
+<p class="text-on-surface-variant">LOG_EVENT: Retrieving potential destinies from cloud_stream...</p>
+<p class="text-secondary">TRANS_DEBIT: -0.10 CC | Query Cost</p>
+<div class="flex items-center gap-1">
+<span class="text-secondary">></span>
+<span class="animate-pulse">_</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full h-terminal-height z-50 flex justify-around items-center px-4 border-t border-secondary/30 backdrop-blur-2xl bg-surface-container/80 shadow-[0_-4px_24px_rgba(0,166,224,0.1)]">
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100 hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-label-sm text-label-sm mt-1">Archive</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100 hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-label-sm text-label-sm mt-1">Console</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant opacity-60 hover:opacity-100 hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined">alt_route</span>
+<span class="font-label-sm text-label-sm mt-1">Paths</span>
+</div>
+<div class="flex flex-col items-center justify-center text-secondary scale-110 cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">account_circle</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</div>
+</nav>
+<!-- Glass Command Terminal (Floating Micro-UI) -->
+<div class="fixed bottom-24 left-1/2 -translate-x-1/2 w-[calc(100%-32px)] max-w-xl z-[70]">
+<div class="glass-panel px-6 py-3 rounded-full border-secondary/30 flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary text-xl">comment</span>
+<input class="bg-transparent border-none focus:ring-0 w-full font-mono-data text-mono-data text-on-surface placeholder:text-on-surface-variant/30 uppercase tracking-[0.2em]" placeholder="AWAITING DESTINY COMMAND..." type="text"/>
+<span class="font-mono-data text-[10px] text-secondary opacity-50">ESC_TO_CANCEL</span>
+</div>
+</div>
+<script>
+        // Simple Terminal Scroll Auto-Scroll
+        const terminal = document.getElementById('terminal-logs');
+        terminal.scrollTop = terminal.scrollHeight;
+
+        // Simulate random terminal updates
+        const logs = [
+            "LOG_EVENT: Environmental texture updated.",
+            "TRANS_DEBIT: -0.05 CC | Passive Scan Fee",
+            "WARN: Atmospheric depth fluctuation detected.",
+            "LOG_EVENT: Narrative Path '401_FREE' showing high divergence.",
+            "STATUS: Connection to Life.OS heart pulsing normally."
+        ];
+
+        setInterval(() => {
+            if (Math.random() > 0.7) {
+                const p = document.createElement('p');
+                p.className = 'text-on-surface-variant opacity-80';
+                p.textContent = logs[Math.floor(Math.random() * logs.length)];
+                terminal.insertBefore(p, terminal.lastElementChild);
+                terminal.scrollTop = terminal.scrollHeight;
+                
+                // Remove old logs to keep performance
+                if (terminal.children.length > 20) {
+                    terminal.removeChild(terminal.children[0]);
+                }
+            }
+        }, 3000);
+    </script>
+</body></html>

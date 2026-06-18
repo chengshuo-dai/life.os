@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Life.OS - Terminal Access</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;family=Geist+Mono:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-lowest": "#0e0e11",
+                    "tertiary-container": "#e9ddff",
+                    "on-secondary-fixed-variant": "#004c69",
+                    "on-primary-container": "#636565",
+                    "on-error-container": "#ffdad6",
+                    "inverse-primary": "#5d5f5f",
+                    "tertiary-fixed-dim": "#d0bcff",
+                    "surface-container-high": "#2a292e",
+                    "surface-container-low": "#1b1b1f",
+                    "surface": "#131317",
+                    "on-tertiary-fixed-variant": "#5516be",
+                    "on-primary-fixed": "#1a1c1c",
+                    "on-background": "#e5e1e7",
+                    "background": "#131317",
+                    "on-secondary-fixed": "#001e2c",
+                    "secondary-container": "#00a6e0",
+                    "tertiary-fixed": "#e9ddff",
+                    "on-error": "#690005",
+                    "on-tertiary-fixed": "#23005c",
+                    "error-container": "#93000a",
+                    "on-tertiary-container": "#7342dd",
+                    "on-surface": "#e5e1e7",
+                    "outline": "#8e9192",
+                    "surface-container-highest": "#353438",
+                    "secondary-fixed": "#c4e7ff",
+                    "secondary": "#7bd0ff",
+                    "on-surface-variant": "#c4c7c8",
+                    "on-secondary-container": "#00374d",
+                    "surface-bright": "#39393d",
+                    "surface-container": "#201f23",
+                    "primary": "#ffffff",
+                    "surface-variant": "#353438",
+                    "on-primary-fixed-variant": "#454747",
+                    "tertiary": "#ffffff",
+                    "primary-container": "#e2e2e2",
+                    "on-secondary": "#00354a",
+                    "on-tertiary": "#3c0091",
+                    "inverse-on-surface": "#313034",
+                    "primary-fixed": "#e2e2e2",
+                    "on-primary": "#2f3131",
+                    "surface-dim": "#131317",
+                    "secondary-fixed-dim": "#7bd0ff",
+                    "surface-tint": "#c6c6c7",
+                    "primary-fixed-dim": "#c6c6c7",
+                    "error": "#ffb4ab",
+                    "outline-variant": "#444748",
+                    "inverse-surface": "#e5e1e7"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-desktop": "48px",
+                    "nav-height": "72px",
+                    "grid-pattern": "18px",
+                    "gutter": "24px",
+                    "terminal-height": "64px",
+                    "margin-mobile": "16px"
+            },
+            "fontFamily": {
+                    "body-md": ["Geist"],
+                    "mono-data": ["Geist Mono"],
+                    "label-sm": ["Geist"],
+                    "display-hero-mobile": ["Geist"],
+                    "display-hero": ["Geist"],
+                    "headline-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "mono-data": ["13px", {"lineHeight": "1.5", "letterSpacing": "0px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                    "display-hero-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "200"}],
+                    "display-hero": ["48px", {"lineHeight": "1.1", "letterSpacing": "0.15em", "fontWeight": "200"}],
+                    "headline-lg": ["24px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "300"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #131317;
+            color: #e5e1e7;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .grid-overlay {
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 18px 18px;
+            pointer-events: none;
+        }
+
+        .breathing-glow {
+            animation: breath 8s ease-in-out infinite;
+        }
+
+        @keyframes breath {
+            0%, 100% { opacity: 0.02; transform: scale(1); }
+            50% { opacity: 0.08; transform: scale(1.1); }
+        }
+
+        .liquid-hover {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .liquid-hover::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(123, 208, 255, 0.1);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .liquid-hover:hover::after {
+            width: 300%;
+            height: 300%;
+        }
+
+        .blink {
+            animation: blinker 1s step-end infinite;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 0.5px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="font-body-md text-body-md select-none">
+<!-- Atmospheric Layer -->
+<div class="fixed inset-0 grid-overlay z-0"></div>
+<div class="fixed -bottom-48 -left-48 w-96 h-96 bg-secondary rounded-full filter blur-[120px] breathing-glow z-0"></div>
+<div class="fixed -top-48 -right-48 w-96 h-96 bg-tertiary-fixed-dim rounded-full filter blur-[120px] breathing-glow z-0" style="animation-delay: 2s;"></div>
+<!-- WebGL Background Placeholder -->
+<div class="fixed inset-0 z-10 pointer-events-none">
+
+</div>
+<!-- Shell Filtering: Navigation suppressed for transactional/login screen -->
+<main class="relative z-20 min-h-screen flex flex-col items-center justify-center px-margin-mobile md:px-margin-desktop">
+<!-- Header Branding -->
+<div class="text-center mb-16 animate-fade-in" style="animation: fadeIn 1.5s ease-out;">
+<h1 class="font-display-hero text-display-hero-mobile md:text-display-hero tracking-[0.25em] text-primary uppercase">
+                Life.OS
+            </h1>
+<p class="font-mono-data text-mono-data text-secondary mt-4 opacity-70 tracking-widest uppercase">
+                Narrative Reality Console
+            </p>
+</div>
+<!-- Central Entry Portal -->
+<div class="w-full max-w-md glass-panel p-10 rounded-lg shadow-2xl relative overflow-hidden group">
+<div class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-secondary/50 to-transparent"></div>
+<div class="space-y-8">
+<div class="flex items-center justify-between border-b border-white/10 pb-2">
+<span class="font-mono-data text-label-sm text-outline uppercase tracking-tighter">Terminal Access</span>
+<span class="font-mono-data text-label-sm text-secondary animate-pulse uppercase">Secure_Link</span>
+</div>
+<div class="space-y-6">
+<div class="relative group">
+<label class="font-mono-data text-label-sm text-outline block mb-2 uppercase" for="access-key">Access Key</label>
+<div class="relative flex items-center">
+<span class="absolute left-0 text-secondary font-mono-data">&gt;</span>
+<input class="w-full bg-transparent border-none border-b border-outline/20 focus:border-secondary focus:ring-0 font-mono-data text-primary pl-6 py-3 transition-all duration-500 placeholder:text-outline/30" id="access-key" placeholder="RETRIEVAL_TOKEN" type="password"/>
+</div>
+</div>
+<button class="w-full h-14 liquid-hover flex items-center justify-center border border-secondary/40 text-secondary font-mono-data tracking-widest uppercase text-label-sm transition-all duration-500 hover:border-secondary hover:text-primary group relative">
+<span class="relative z-10">Initialize Neural Link</span>
+<span class="absolute right-4 opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-x-2 group-hover:translate-x-0 material-symbols-outlined">
+                            bolt
+                        </span>
+</button>
+</div>
+<div class="pt-4 flex justify-between items-center opacity-40">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-secondary"></span>
+<span class="font-mono-data text-[10px] uppercase tracking-widest">Sys_Stable</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="font-mono-data text-[10px] uppercase tracking-widest">Ver 4.2.0_Destiny</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Subtle Footer Status -->
+<div class="fixed bottom-12 w-full flex justify-center pointer-events-none opacity-20">
+<div class="flex gap-12 font-mono-data text-[10px] uppercase tracking-[0.3em]">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined !text-[14px]">sensors</span>
+<span>Syncing Consciousness</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined !text-[14px]">auto_awesome</span>
+<span>Latent Reality Mapping</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Glass Command Terminal (Immutable Rule - Active but minimized for Login) -->
+<footer class="fixed bottom-0 w-full h-terminal-height z-50 flex items-center px-margin-desktop bg-surface-container-lowest/80 backdrop-blur-xl border-t border-secondary/30 shadow-[0_-4px_24px_rgba(0,166,224,0.1)]">
+<div class="flex items-center gap-4 w-full">
+<span class="text-secondary font-mono-data animate-pulse">&gt;</span>
+<div class="font-mono-data text-secondary drop-shadow-[0_0_8px_rgba(123,208,255,0.5)]">
+                Awaiting Authorization <span class="blink">_</span>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for input field
+        const input = document.getElementById('access-key');
+        const submitBtn = document.querySelector('button');
+
+        input.addEventListener('focus', () => {
+            input.parentElement.querySelector('span').classList.add('scale-125');
+        });
+
+        input.addEventListener('blur', () => {
+            input.parentElement.querySelector('span').classList.remove('scale-125');
+        });
+
+        // Neural link "simulation"
+        submitBtn.addEventListener('click', () => {
+            submitBtn.innerHTML = '<span class="relative z-10">Syncing...</span>';
+            submitBtn.classList.add('border-primary');
+            
+            setTimeout(() => {
+                const terminalText = document.querySelector('.h-terminal-height div:last-child');
+                terminalText.innerHTML = 'Identity Verified. Establishing Destiny Link <span class="blink">_</span>';
+                terminalText.classList.remove('text-secondary');
+                terminalText.classList.add('text-primary');
+            }, 800);
+        });
+
+        // Atmospheric mouse track
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            const glows = document.querySelectorAll('.breathing-glow');
+            glows[0].style.transform = `translate(${x * 20}px, ${y * 20}px) scale(${1 + x * 0.1})`;
+            glows[1].style.transform = `translate(${-x * 20}px, ${-y * 20}px) scale(${1 + y * 0.1})`;
+        });
+    </script>
+<style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</body></html>

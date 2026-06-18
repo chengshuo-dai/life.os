@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>LIFE.OS | System Initialization</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/style.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/style.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-variant": "#353438",
+                    "inverse-on-surface": "#313034",
+                    "surface-dim": "#131317",
+                    "on-secondary-container": "#00374d",
+                    "on-primary-fixed": "#1a1c1c",
+                    "on-background": "#e5e1e7",
+                    "secondary-fixed": "#c4e7ff",
+                    "on-tertiary-fixed": "#23005c",
+                    "secondary": "#7bd0ff",
+                    "on-surface": "#e5e1e7",
+                    "on-primary": "#2f3131",
+                    "primary-fixed": "#e2e2e2",
+                    "error-container": "#93000a",
+                    "secondary-container": "#00a6e0",
+                    "on-secondary-fixed": "#001e2c",
+                    "surface": "#131317",
+                    "on-error-container": "#ffdad6",
+                    "primary-container": "#e2e2e2",
+                    "inverse-primary": "#5d5f5f",
+                    "surface-container-high": "#2a292e",
+                    "on-error": "#690005",
+                    "tertiary-container": "#e9ddff",
+                    "tertiary-fixed-dim": "#d0bcff",
+                    "on-secondary-fixed-variant": "#004c69",
+                    "on-primary-fixed-variant": "#454747",
+                    "outline-variant": "#444748",
+                    "on-tertiary-container": "#7342dd",
+                    "inverse-surface": "#e5e1e7",
+                    "error": "#ffb4ab",
+                    "surface-container-highest": "#353438",
+                    "primary": "#ffffff",
+                    "background": "#131317",
+                    "primary-fixed-dim": "#c6c6c7",
+                    "on-tertiary-fixed-variant": "#5516be",
+                    "surface-container-low": "#1b1b1f",
+                    "secondary-fixed-dim": "#7bd0ff",
+                    "surface-container-lowest": "#0e0e11",
+                    "tertiary": "#ffffff",
+                    "surface-tint": "#c6c6c7",
+                    "surface-bright": "#39393d",
+                    "on-secondary": "#00354a",
+                    "on-primary-container": "#636565",
+                    "tertiary-fixed": "#e9ddff",
+                    "surface-container": "#201f23",
+                    "outline": "#8e9192",
+                    "on-tertiary": "#3c0091",
+                    "on-surface-variant": "#c4c7c8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "terminal-height": "64px",
+                    "margin-desktop": "48px",
+                    "gutter": "24px",
+                    "nav-height": "72px",
+                    "margin-mobile": "16px",
+                    "grid-pattern": "18px"
+            },
+            "fontFamily": {
+                    "display-hero": ["Geist"],
+                    "body-md": ["Geist"],
+                    "label-sm": ["Geist"],
+                    "headline-lg": ["Geist"],
+                    "display-hero-mobile": ["Geist"],
+                    "mono-data": ["Geist Mono"]
+            },
+            "fontSize": {
+                    "display-hero": ["48px", {"lineHeight": "1.1", "letterSpacing": "0.15em", "fontWeight": "200"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                    "headline-lg": ["24px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "300"}],
+                    "display-hero-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "200"}],
+                    "mono-data": ["13px", {"lineHeight": "1.5", "letterSpacing": "0px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        background-color: #131317;
+        color: #e5e1e7;
+        overflow: hidden;
+      }
+
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+      }
+
+      .terminal-scroll::-webkit-scrollbar {
+        display: none;
+      }
+
+      @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+      }
+
+      .cursor-blink {
+        animation: blink 1s step-end infinite;
+      }
+
+      .scanner-pulse {
+        animation: pulse-ring 4s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+      }
+
+      @keyframes pulse-ring {
+        0% { transform: scale(0.95); opacity: 0.1; }
+        50% { transform: scale(1.05); opacity: 0.4; }
+        100% { transform: scale(0.95); opacity: 0.1; }
+      }
+
+      .glass-card {
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(20px);
+        border: 0.5px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .environmental-grid {
+        background-image: radial-gradient(circle, rgba(255,255,255,0.05) 1px, transparent 1px);
+        background-size: 18px 18px;
+      }
+
+      .liquid-hover::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(123, 208, 255, 0.1);
+        transform: scaleX(0);
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        z-index: -1;
+      }
+
+      .liquid-hover:hover::before {
+        transform: scaleX(1);
+      }
+    </style>
+<style>
+      @keyframes scanline {
+        0% { transform: translateY(-100%); }
+        100% { transform: translateY(100%); }
+      }
+      .scanline-overlay {
+        position: fixed;
+        inset: 0;
+        height: 100%;
+        width: 100%;
+        background: linear-gradient(to bottom, transparent 50%, rgba(123, 208, 255, 0.05) 50%);
+        background-size: 100% 4px;
+        pointer-events: none;
+        z-index: 60;
+        animation: scanline 10s linear infinite;
+      }
+      @keyframes heartbeat {
+        0%, 100% { transform: scale(1); opacity: 0.2; }
+        10%, 30% { transform: scale(1.05); opacity: 0.4; }
+        20% { transform: scale(1.02); opacity: 0.3; }
+      }
+      .heartbeat-pulse {
+        animation: heartbeat 2s ease-in-out infinite;
+      }
+      @keyframes flicker {
+        0%, 100% { opacity: 0.3; }
+        92% { opacity: 0.3; }
+        93% { opacity: 0.1; }
+        94% { opacity: 0.4; }
+        95% { opacity: 0.2; }
+        96% { opacity: 0.3; }
+      }
+      .data-flicker {
+        animation: flicker 4s linear infinite;
+      }
+      @keyframes glitch-hover {
+        0% { transform: translate(0); }
+        20% { transform: translate(-2px, 2px); }
+        40% { transform: translate(-2px, -2px); }
+        60% { transform: translate(2px, 2px); }
+        80% { transform: translate(2px, -2px); }
+        100% { transform: translate(0); }
+      }
+      .liquid-glitch:hover {
+        box-shadow: 0 0 15px rgba(123, 208, 255, 0.3);
+        animation: glitch-hover 0.2s ease infinite;
+      }
+    </style></head>
+<body class="font-body-md text-body-md selection:bg-secondary/30"><div class="scanline-overlay"></div>
+<!-- Environmental Grid Overlay -->
+<div class="fixed inset-0 environmental-grid pointer-events-none z-0"></div>
+<!-- WebGL Background Placeholder -->
+<div class="fixed inset-0 z-0 opacity-20">
+</div>
+<!-- Top Navigation (Shared Component Integration) -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile md:px-margin-desktop h-[72px] backdrop-blur-xl border-b border-white/10 group">
+<div class="flex items-center gap-4">
+<h1 class="font-display-hero-mobile text-display-hero-mobile tracking-tighter text-primary opacity-40 group-hover:opacity-100 transition-opacity duration-700">LIFE.OS</h1>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary cursor-pointer active:scale-95 duration-300 hover:text-secondary">power_settings_new</span>
+<span class="material-symbols-outlined text-primary cursor-pointer active:scale-95 duration-300 hover:text-secondary">sync_alt</span>
+<span class="material-symbols-outlined text-primary cursor-pointer active:scale-95 duration-300 hover:text-secondary">settings_input_component</span>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="relative z-10 w-full h-screen flex items-center justify-center pt-[72px] pb-[64px]">
+<!-- Left Side: System Logs -->
+<aside class="hidden lg:flex flex-col absolute left-margin-desktop top-[120px] bottom-[100px] w-64 font-mono-data text-mono-data opacity-50 overflow-hidden pointer-events-none">
+<div class="flex flex-col-reverse gap-1 terminal-scroll transition-all" id="log-stream">
+<!-- Log entries will be injected here -->
+<p class="text-secondary/80">NEURAL_LINK: STANDBY</p>
+<p>ENCRYPTING_DESTINY_STRATA...</p>
+<p>BOOT_SEQUENCE: 92%</p>
+<p>MAPPING_TEMPORAL_GRIDS...</p>
+<p>ROOT_ACCESS_PENDING...</p>
+<p class="text-error/60">BIOS_WARNING: UNKNOWN_ORIGIN</p>
+<p>LOAD_ASSET: IMAGE_10...</p>
+<p>CORE_INIT: SUCCESS</p>
+</div>
+</aside>
+<!-- Central Module: Neural Link Portal -->
+<div class="relative flex flex-col items-center">
+<div class="relative w-80 h-80 md:w-96 md:h-96 flex items-center justify-center">
+<!-- Scanner Animation Rings -->
+<div class="absolute inset-0 scanner-pulse border-[0.5px] border-secondary/20 rounded-full heartbeat-pulse"></div>
+<div class="absolute inset-8 scanner-pulse border-[1px] border-secondary/10 rounded-full heartbeat-pulse" style="animation-delay: 1s;"></div>
+<div class="absolute inset-16 scanner-pulse border-[0.5px] border-secondary/30 rounded-full heartbeat-pulse" style="animation-delay: 2s;"></div>
+<!-- Central Icon Image -->
+<div class="relative w-48 h-48 md:w-56 md:h-56 p-4 overflow-hidden rounded-full glass-card flex items-center justify-center transition-transform duration-1000 hover:scale-105">
+<img alt="System Logo" class="w-full h-full object-contain opacity-80 invert brightness-200" src="https://lh3.googleusercontent.com/aida/AP1WRLu7dQyHWiKXam79mrIE9b-g1Z6_an4eJEF9B7e0mzUkP_GEb1z8r5i7-uBt0CRWoBaS3x1_0YjyS_it0RNE6OsG1N75LgESsnJUizjy3zl0kbYL6nweeppj5L9TH9zZ_PN0Yk_V-5zNezj_wZxTWaUw1RToUFyTuYIP8KV9ag_aK7_yWk2bG153q3GEmanBAQc_jfLoZPMOpp8i1MXQFN_kIvVzF2luI3mC-bz6CTEraOR0XjCijGwsLg"/>
+</div>
+<!-- Floating Labels around circle -->
+<div class="absolute top-0 right-0 font-mono-data text-[10px] tracking-[0.2em] opacity-40 rotate-45 transform translate-x-8 -translate-y-8">
+                    AUTHENTICATION_ACTIVE
+                </div>
+<div class="absolute bottom-0 left-0 font-mono-data text-[10px] tracking-[0.2em] opacity-40 -rotate-45 transform -translate-x-8 translate-y-8">
+                    SIGNAL_STRENGTH: 0.88MS
+                </div>
+</div>
+<!-- Initialization Action -->
+<div class="mt-12 flex flex-col items-center gap-4 group">
+<button class="relative overflow-hidden px-10 py-3 font-mono-data text-mono-data tracking-[0.3em] glass-card liquid-hover transition-all duration-500 border-secondary/40 hover:border-secondary liquid-glitch" id="init-btn">
+                    IDENTIFY_USER
+                    <span class="ml-2 cursor-blink inline-block w-[1px] h-4 bg-secondary align-middle">_</span>
+</button>
+<span class="font-label-sm text-label-sm text-on-surface-variant/40 tracking-widest uppercase">Awaiting biometric signature</span>
+</div>
+</div>
+<!-- Right Side: Secondary Meta (Mobile hidden) -->
+<aside class="hidden lg:flex flex-col absolute right-margin-desktop bottom-[100px] text-right font-mono-data text-mono-data opacity-30 gap-2 data-flicker">
+<p>LOC: 40.7128° N, 74.0060° W</p>
+<p>PATH: NEURAL/CORE/SYNC</p>
+<p>OS_VER: ALPHA-9-SYNC</p>
+</aside>
+</main>
+<!-- Bottom Navigation (Terminal Style) -->
+<nav class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-terminal-height bg-surface/90 border-t border-secondary/30 backdrop-blur-md shadow-[0_-4px_20px_rgba(123,208,255,0.1)]">
+<div class="flex-1 flex items-center justify-center h-full transition-all duration-500 ease-out text-secondary border-t-2 border-secondary -mt-[2px] bg-secondary/5">
+<div class="flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-[20px]">settings_power</span>
+<span class="font-mono-data text-[10px] tracking-tighter">INITIALIZE</span>
+</div>
+</div>
+<div class="flex-1 flex items-center justify-center h-full transition-all duration-500 ease-out text-on-surface-variant/60 hover:text-secondary hover:bg-secondary/5 cursor-pointer">
+<div class="flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-[20px]">document_scanner</span>
+<span class="font-mono-data text-[10px] tracking-tighter">SCAN</span>
+</div>
+</div>
+<div class="flex-1 flex items-center justify-center h-full transition-all duration-500 ease-out text-on-surface-variant/60 hover:text-secondary hover:bg-secondary/5 cursor-pointer">
+<div class="flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-[20px]">lock_open</span>
+<span class="font-mono-data text-[10px] tracking-tighter">DECRYPT</span>
+</div>
+</div>
+<div class="flex-1 flex items-center justify-center h-full transition-all duration-500 ease-out text-on-surface-variant/60 hover:text-secondary hover:bg-secondary/5 cursor-pointer">
+<div class="flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-[20px]">sync</span>
+<span class="font-mono-data text-[10px] tracking-tighter">SYNC</span>
+</div>
+</div>
+<div class="flex-1 flex items-center justify-center h-full transition-all duration-500 ease-out text-on-surface-variant/60 hover:text-error hover:bg-error/5 cursor-pointer">
+<div class="flex flex-col items-center gap-1">
+<span class="material-symbols-outlined text-[20px]">logout</span>
+<span class="font-mono-data text-[10px] tracking-tighter">EXIT</span>
+</div>
+</div>
+</nav>
+<!-- Script for Dynamic Interactions -->
+<script>
+        // System Log Simulation
+        const logs = [
+            "SCANNING_NEURAL_NODES...",
+            "RETRIEVING_DATA_PACKETS...",
+            "VALIDATING_ENCRYPTION_KEY...",
+            "TEMP_THRESHOLD: NOMINAL",
+            "UPLINK_ESTABLISHED: SATELLITE_A12",
+            "DESTINY_MAP_LOADED: 100%",
+            "USER_LATENCY: 12ms",
+            "SYSTEM_READY_FOR_INPUT..."
+        ];
+
+        const logContainer = document.getElementById('log-stream');
+        
+        function addLog() {
+            const p = document.createElement('p');
+            const randomLog = logs[Math.floor(Math.random() * logs.length)];
+            p.innerText = randomLog;
+            p.className = 'opacity-0 transition-opacity duration-1000';
+            logContainer.prepend(p);
+            
+            setTimeout(() => p.classList.remove('opacity-0'), 100);
+            
+            if (logContainer.children.length > 20) {
+                logContainer.removeChild(logContainer.lastChild);
+            }
+        }
+
+        setInterval(addLog, 2500);
+
+        // Hover Glow Effect
+        const initBtn = document.getElementById('init-btn');
+        const logo = document.querySelector('h1');
+
+        initBtn.addEventListener('mouseenter', () => {
+            logo.classList.remove('opacity-40');
+            logo.classList.add('opacity-100', 'drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]');
+        });
+
+        initBtn.addEventListener('mouseleave', () => {
+            logo.classList.add('opacity-40');
+            logo.classList.remove('opacity-100', 'drop-shadow-[0_0_15px_rgba(255,255,255,0.4)]');
+        });
+
+        // Click interaction
+        initBtn.addEventListener('click', function() {
+            this.innerText = "AUTHENTICATING...";
+            this.classList.add('animate-pulse');
+            setTimeout(() => {
+                this.innerText = "ACCESS_GRANTED";
+                this.classList.remove('animate-pulse');
+                this.classList.add('text-secondary', 'border-secondary');
+            }, 1500);
+        });
+    </script>
+</body></html>

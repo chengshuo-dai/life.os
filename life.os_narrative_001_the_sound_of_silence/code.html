@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Life.OS - Narrative 001: The Sound of Silence</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-mono/geist-mono.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/geist@1.3.0/dist/fonts/geist-sans/geist-sans.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#7bd0ff",
+                    "secondary-container": "#00a6e0",
+                    "secondary": "#7bd0ff",
+                    "primary": "#ffffff",
+                    "outline-variant": "#444748",
+                    "tertiary-fixed-dim": "#d0bcff",
+                    "error-container": "#93000a",
+                    "surface-container-highest": "#353438",
+                    "on-tertiary": "#3c0091",
+                    "on-primary-container": "#636565",
+                    "primary-fixed-dim": "#c6c6c7",
+                    "on-tertiary-fixed-variant": "#5516be",
+                    "on-error-container": "#ffdad6",
+                    "on-background": "#e5e1e7",
+                    "inverse-on-surface": "#313034",
+                    "tertiary-container": "#e9ddff",
+                    "surface-variant": "#353438",
+                    "on-error": "#690005",
+                    "on-surface": "#e5e1e7",
+                    "on-secondary-fixed": "#001e2c",
+                    "surface-container-lowest": "#0e0e11",
+                    "surface-dim": "#131317",
+                    "on-tertiary-fixed": "#23005c",
+                    "on-secondary-container": "#00374d",
+                    "inverse-primary": "#5d5f5f",
+                    "on-primary": "#2f3131",
+                    "on-secondary": "#00354a",
+                    "on-primary-fixed-variant": "#454747",
+                    "inverse-surface": "#e5e1e7",
+                    "error": "#ffb4ab",
+                    "surface-container-low": "#1b1b1f",
+                    "surface-container": "#201f23",
+                    "on-surface-variant": "#c4c7c8",
+                    "primary-container": "#e2e2e2",
+                    "on-secondary-fixed-variant": "#004c69",
+                    "surface-tint": "#c6c6c7",
+                    "surface": "#131317",
+                    "primary-fixed": "#e2e2e2",
+                    "secondary-fixed": "#c4e7ff",
+                    "surface-container-high": "#2a292e",
+                    "on-tertiary-container": "#7342dd",
+                    "on-primary-fixed": "#1a1c1c",
+                    "tertiary": "#ffffff",
+                    "tertiary-fixed": "#e9ddff",
+                    "outline": "#8e9192",
+                    "surface-bright": "#39393d",
+                    "background": "#131317"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "nav-height": "72px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "48px",
+                    "gutter": "24px",
+                    "grid-pattern": "18px",
+                    "terminal-height": "64px"
+            },
+            "fontFamily": {
+                    "display-hero": ["Geist"],
+                    "display-hero-mobile": ["Geist"],
+                    "body-md": ["Geist"],
+                    "mono-data": ["Geist Mono"],
+                    "label-sm": ["Geist"],
+                    "headline-lg": ["Geist"]
+            },
+            "fontSize": {
+                    "display-hero": ["48px", {"lineHeight": "1.1", "letterSpacing": "0.15em", "fontWeight": "200"}],
+                    "display-hero-mobile": ["32px", {"lineHeight": "1.2", "letterSpacing": "0.1em", "fontWeight": "200"}],
+                    "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0.01em", "fontWeight": "400"}],
+                    "mono-data": ["13px", {"lineHeight": "1.5", "letterSpacing": "0px", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.1em", "fontWeight": "500"}],
+                    "headline-lg": ["24px", {"lineHeight": "1.4", "letterSpacing": "0.05em", "fontWeight": "300"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      body {
+        background-color: #131317;
+        color: #e5e1e7;
+        margin: 0;
+        overflow-x: hidden;
+      }
+      
+      .grid-bg {
+        background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+        background-size: 18px 18px;
+      }
+
+      .breathe {
+        animation: breathe 8s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+      }
+
+      @keyframes breathe {
+        0%, 100% { opacity: 0.02; transform: scale(1); }
+        50% { opacity: 0.08; transform: scale(1.05); }
+      }
+
+      .terminal-cursor::after {
+        content: '_';
+        animation: blink 1s step-end infinite;
+      }
+
+      @keyframes blink {
+        from, to { opacity: 1; }
+        50% { opacity: 0; }
+      }
+
+      .liquid-hover {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .liquid-hover::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        background: rgba(123, 208, 255, 0.1);
+        transform: translate(-50%, -50%) scale(0);
+        transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        border-radius: 50%;
+        z-index: -1;
+      }
+
+      .liquid-hover:hover::before {
+        transform: translate(-50%, -50%) scale(2);
+      }
+
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 200, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+</head>
+<body class="font-body-md text-body-md grid-bg min-h-screen">
+<!-- Atmospheric Layer -->
+<div class="fixed inset-0 pointer-events-none z-0">
+<div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-secondary blur-[160px] opacity-[0.03] breathe"></div>
+<div class="absolute top-0 right-0 w-[600px] h-[600px] bg-tertiary-fixed-dim blur-[160px] opacity-[0.02] breathe" style="animation-delay: -4s;"></div>
+</div>
+<!-- TopNavBar -->
+<nav class="flex justify-between items-center px-margin-desktop w-full h-nav-height fixed top-0 z-50 backdrop-blur-[20px] bg-surface/10 transition-colors duration-300">
+<div class="flex items-center gap-4">
+<span class="font-headline-lg text-headline-lg tracking-[0.15em] text-primary">Life.OS</span>
+<div class="w-px h-4 bg-outline/30 mx-2"></div>
+<span class="font-mono-data text-mono-data text-outline">PATH_HERMIT_001</span>
+</div>
+<div class="flex items-center gap-8 text-on-surface-variant font-body-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[14px]">sync</span>
+<span class="font-mono-data text-[12px] uppercase tracking-widest">Isolation Sync: Active</span>
+</div>
+<button class="hover:text-secondary transition-colors duration-300">Sign In</button>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="relative z-10 pt-nav-height pb-terminal-height min-h-screen flex flex-col items-center justify-center px-margin-mobile md:px-margin-desktop">
+<!-- Central Narrative Anchor -->
+<div class="max-w-2xl w-full flex flex-col items-center text-center space-y-12">
+<!-- Central Brand Logo (Image 6) -->
+<div class="relative w-48 h-48 md:w-64 md:h-64 flex items-center justify-center">
+<div class="absolute inset-0 bg-primary/5 rounded-full blur-3xl animate-pulse"></div>
+<img alt="Life.OS Zen Logo" class="w-full h-full object-contain relative z-10 opacity-90 drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]" src="https://lh3.googleusercontent.com/aida/AP1WRLu7dQyHWiKXam79mrIE9b-g1Z6_an4eJEF9B7e0mzUkP_GEb1z8r5i7-uBt0CRWoBaS3x1_0YjyS_it0RNE6OsG1N75LgESsnJUizjy3zl0kbYL6nweeppj5L9TH9zZ_PN0Yk_V-5zNezj_wZxTWaUw1RToUFyTuYIP8KV9ag_aK7_yWk2bG153q3GEmanBAQc_jfLoZPMOpp8i1MXQFN_kIvVzF2luI3mC-bz6CTEraOR0XjCijGwsLg"/>
+</div>
+<!-- Narrative Text Area -->
+<div class="space-y-6">
+<h1 class="font-display-hero text-display-hero-mobile md:text-display-hero text-primary opacity-90">
+                    The Sound of Silence
+                </h1>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed max-w-lg mx-auto">
+                    The mist clings to the Erhai shore, softening the world into shades of grey and silver. In this courtyard in Dali, the passage of time is measured only by the dissipating dew. You are alone, and the silence is a physical presence—a weightless blanket.
+                </p>
+</div>
+<!-- Narrative Choices (The Binary Pair) -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-gutter w-full max-w-xl pt-8">
+<!-- Choice 1: Observe the Clouds -->
+<button class="group relative aspect-[3/4] rounded-sm overflow-hidden border border-primary/10 bg-surface-container-low/40 backdrop-blur-md transition-all duration-500 hover:border-secondary/40 hover:bg-surface-container/60 liquid-hover p-8 flex flex-col justify-between text-left">
+<span class="font-mono-data text-[10px] text-outline tracking-widest">001_ACTION</span>
+<div class="space-y-2">
+<h3 class="font-headline-lg text-headline-lg text-primary">Observe the Clouds</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant opacity-60">Watch the shifting forms over Cangshan. Prioritize stillness.</p>
+</div>
+<div class="flex justify-end">
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300">north_east</span>
+</div>
+</button>
+<!-- Choice 2: Boil Water for Tea -->
+<button class="group relative aspect-[3/4] rounded-sm overflow-hidden border border-primary/10 bg-surface-container-low/40 backdrop-blur-md transition-all duration-500 hover:border-secondary/40 hover:bg-surface-container/60 liquid-hover p-8 flex flex-col justify-between text-left">
+<span class="font-mono-data text-[10px] text-outline tracking-widest">002_ACTION</span>
+<div class="space-y-2">
+<h3 class="font-headline-lg text-headline-lg text-primary">Boil Water for Tea</h3>
+<p class="font-body-md text-[14px] text-on-surface-variant opacity-60">Begin the morning ritual. A deliberate engagement with the physical.</p>
+</div>
+<div class="flex justify-end">
+<span class="material-symbols-outlined text-secondary opacity-0 group-hover:opacity-100 transition-opacity duration-300">north_east</span>
+</div>
+</button>
+</div>
+</div>
+</main>
+<!-- Command Terminal / BottomNavBar -->
+<footer class="fixed bottom-0 w-full z-50 flex items-center px-margin-desktop bg-surface-container-lowest/80 backdrop-blur-xl border-t border-on-secondary-fixed-variant/20 h-terminal-height shadow-[0_-4px_24px_rgba(0,166,224,0.1)]">
+<div class="flex items-center w-full gap-6">
+<div class="flex items-center gap-3 text-secondary drop-shadow-[0_0_8px_rgba(123,208,255,0.5)]">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+<span class="font-mono-data text-mono-data uppercase tracking-widest">Terminal</span>
+</div>
+<!-- Terminal Input Simulation -->
+<div class="flex-1 font-mono-data text-mono-data text-on-surface-variant/80 overflow-hidden flex items-center">
+<span class="mr-2 text-secondary">></span>
+<span class="terminal-cursor" id="terminal-text">awaiting_input...</span>
+</div>
+<!-- Status Cluster -->
+<div class="hidden md:flex items-center gap-6 font-mono-data text-[11px] text-outline">
+<div class="flex items-center gap-2">
+<div class="w-1.5 h-1.5 rounded-full bg-secondary shadow-[0_0_5px_#7bd0ff]"></div>
+<span>SYNC_OK</span>
+</div>
+<span>NODE: DALI_YUNNAN</span>
+<span>LAT: 25.6065° N</span>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for the terminal text
+        const terminalOutput = document.getElementById('terminal-text');
+        const phrases = [
+            'awaiting_input...',
+            'isolation_sync_active...',
+            'environmental_ambient_001_detected...',
+            'awaiting_choice_retrieval...'
+        ];
+        let index = 0;
+
+        function cycleText() {
+            terminalOutput.classList.remove('terminal-cursor');
+            setTimeout(() => {
+                index = (index + 1) % phrases.length;
+                terminalOutput.textContent = phrases[index];
+                terminalOutput.classList.add('terminal-cursor');
+            }, 500);
+        }
+
+        setInterval(cycleText, 5000);
+
+        // Smooth fade in for content
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.opacity = '0';
+            let opacity = 0;
+            const fadeIn = setInterval(() => {
+                if (opacity >= 1) clearInterval(fadeIn);
+                document.body.style.opacity = opacity;
+                opacity += 0.05;
+            }, 30);
+        });
+    </script>
+</body></html>
