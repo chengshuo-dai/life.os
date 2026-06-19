@@ -3,7 +3,7 @@ import { generateId, now } from '@/lib/utils';
 
 // ─── Default Credit Configuration ──────────────────────
 export const DEFAULT_CREDIT_CONFIG = {
-  starting_balance: 15.0,
+  starting_balance: 0,
   credit_limit: 20.0,
   daily_existence_quota: 2.0,
   narrative_interaction_fee: 0.4,

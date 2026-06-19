@@ -269,6 +269,78 @@
     color: #ffb4ab;
     background: rgba(255, 180, 171, 0.08);
   }
+
+  /* glitch-active — text/container tremor effect (spec: .glitch-active) */
+  .glitch-active {
+    animation: glitch 0.3s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    position: relative;
+  }
+
+  .glitch-active::before,
+  .glitch-active::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.6;
+  }
+
+  .glitch-active::before {
+    color: #00a6e0;
+    animation: glitch 0.3s cubic-bezier(0.16, 1, 0.3, 1) infinite reverse;
+    clip-path: inset(0 0 60% 0);
+  }
+
+  .glitch-active::after {
+    color: #ffb4ab;
+    animation: glitch 0.3s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+    clip-path: inset(60% 0 0 0);
+  }
+
+  /* fragment-hidden — blur/grain filter for locked content (spec: .fragment-hidden) */
+  .fragment-hidden {
+    filter: blur(8px) grayscale(0.8);
+    user-select: none;
+    cursor: pointer;
+    position: relative;
+    transition: filter 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .fragment-hidden::after {
+    content: '[REDACTED] // Click to Decrypt';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Geist Mono', monospace;
+    font-size: 12px;
+    color: #ffb4ab;
+    letter-spacing: 0.1em;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .fragment-hidden:hover {
+    filter: blur(3px) grayscale(0.4);
+  }
+
+  .fragment-hidden:hover::after {
+    opacity: 1;
+  }
+
+  /* sync-active — pulsing indicator for syncing progress bars (spec: .sync-active) */
+  .sync-active {
+    animation: sync-pulse 1.5s ease-in-out infinite;
+    box-shadow: 0 0 12px rgba(123, 208, 255, 0.3);
+  }
+
+  @keyframes sync-pulse {
+    0%, 100% { box-shadow: 0 0 8px rgba(123, 208, 255, 0.2); }
+    50% { box-shadow: 0 0 20px rgba(123, 208, 255, 0.5); }
+  }
 }
 
 /* ─── Utilities Layer ─────────────────────────────────── */

@@ -49,7 +49,7 @@ export async function POST(
     }
 
     const body = await request.json();
-    const { node_id, choice_id } = body;
+    const { node_id, choice_id, reaction_time } = body;
 
     if (!node_id || !choice_id) {
       return NextResponse.json(
@@ -215,6 +215,7 @@ export async function POST(
         chosen_option: choice.text,
         consequence: choice.consequence_text,
         outcome_flags: choice.outcome_flags,
+        reaction_time_ms: reaction_time ?? null,
       },
       is_corrupted: false,
     };

@@ -48,6 +48,7 @@ The silence stretches. Then it snaps.`,
           glitch_intensity: 0.12,
           ambient_audio_cue: 'heart_monitor_flatline',
           light_wave_color: 'cyan',
+          timer_seconds: 45,
         },
         choices: [
           {
@@ -61,7 +62,7 @@ The silence stretches. Then it snaps.`,
               fragments_delta: 1,
               strata_depth_delta: 0,
             },
-            outcome_flags: ['GAIN_FRAGMENT'],
+            outcome_flags: ['GAIN_FRAGMENT', 'UNLOCK_PATH_CORP'],
           },
           {
             id: 'choice_082_med_001_b',
@@ -114,6 +115,7 @@ Time bifurcates.`,
           glitch_intensity: 0.22,
           ambient_audio_cue: 'ekg_tachycardia',
           light_wave_color: 'cyan',
+          timer_seconds: 30,
         },
         choices: [
           {
@@ -553,6 +555,7 @@ Somewhere in the building, Oracle is still running, still optimizing, still pred
           glitch_intensity: 0.28,
           ambient_audio_cue: 'server_hum_distant',
           light_wave_color: 'violet',
+          timer_seconds: 60,
         },
         choices: [
           {

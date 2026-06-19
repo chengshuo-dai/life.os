@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLifeOS } from '@/lib/store-client';
 import ChoiceButton from '@/components/ui/ChoiceButton';
@@ -11,7 +11,7 @@ import type { NarrativeNode, NarrativeDetailResponse, ChoiceResponse } from '@/m
 /**
  * Narrative Scene Viewer
  * Displays a single narrative node with its prose content and choice buttons.
- * Handles the branching choice flow.
+ * Handles the branching choice flow, countdown timers, and reaction time tracking.
  */
 export default function NarrativeScenePage({
   params,
@@ -26,6 +26,12 @@ export default function NarrativeScenePage({
   const [error, setError] = useState('');
   const [fadeIn, setFadeIn] = useState(false);
 
+  // ─── Timer State ─────────────────────────────────────
+  const [timerRemaining, setTimerRemaining] = useState(0);
+  const [timerExpired, setTimerExpired] = useState(false);
+  const nodeShownAt = useRef<number>(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
   useEffect(() => {
     dispatch({ type: 'SET_PAGE', page: `/narratives/${params.id}` });
     loadNarrative();
@@ -34,14 +40,56 @@ export default function NarrativeScenePage({
   useEffect(() => {
     if (node) {
       const t = setTimeout(() => setFadeIn(true), 100);
+      // Start timer tracking
+      nodeShownAt.current = Date.now();
+      startTimer(node);
       return () => clearTimeout(t);
     }
   }, [node]);
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+  }, []);
+
+  const startTimer = (n: NarrativeNode) => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    setTimerExpired(false);
+
+    const seconds = n.environment.timer_seconds;
+    if (!seconds || seconds <= 0 || n.is_endpoint || n.choices.length === 0) {
+      setTimerRemaining(0);
+      return;
+    }
+
+    setTimerRemaining(seconds);
+    timerRef.current = setInterval(() => {
+      setTimerRemaining((prev) => {
+        const next = prev - 1;
+        if (next <= 0) {
+          if (timerRef.current) clearInterval(timerRef.current);
+          setTimerExpired(true);
+          return 0;
+        }
+        return next;
+      });
+    }, 1000);
+  };
+
+  // Auto-select failure branch on timer expiry
+  useEffect(() => {
+    if (timerExpired && node && !isChoosing && !node.is_endpoint) {
+      handleChoice(node.choices[node.choices.length - 1].id, true);
+    }
+  }, [timerExpired]);
 
   const loadNarrative = async () => {
     setIsLoading(true);
     setError('');
     setFadeIn(false);
+    if (timerRef.current) clearInterval(timerRef.current);
 
     const result = await apiFetch<NarrativeDetailResponse>(
       `/narratives/${params.id}`
@@ -55,10 +103,13 @@ export default function NarrativeScenePage({
     setIsLoading(false);
   };
 
-  const handleChoice = async (choiceId: string) => {
+  const handleChoice = async (choiceId: string, isTimeout = false) => {
     if (!node) return;
     setIsChoosing(true);
     setFadeIn(false);
+    if (timerRef.current) clearInterval(timerRef.current);
+
+    const reactionTime = Date.now() - nodeShownAt.current;
 
     const result = await apiFetch<ChoiceResponse>(
       `/narratives/${params.id}/choice`,
@@ -67,6 +118,7 @@ export default function NarrativeScenePage({
         body: JSON.stringify({
           node_id: node.id,
           choice_id: choiceId,
+          reaction_time: Math.round(reactionTime),
         }),
       }
     );
@@ -75,10 +127,8 @@ export default function NarrativeScenePage({
       dispatch({ type: 'APPLY_CHOICE', response: result.data });
 
       if (result.data.next_node.is_endpoint) {
-        // Show the final node content, then offer to return to hub
         setNode(result.data.next_node);
         setIsChoosing(false);
-        // Let endpoint render with "Return to Hub" option
       } else {
         setNode(result.data.next_node);
         setIsChoosing(false);
@@ -91,6 +141,13 @@ export default function NarrativeScenePage({
       }
       setIsChoosing(false);
     }
+  };
+
+  // ─── Timer formatting ────────────────────────────────
+  const formatTimer = (seconds: number) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m}:${s.toString().padStart(2, '0')}`;
   };
 
   if (isLoading) {
@@ -149,6 +206,23 @@ export default function NarrativeScenePage({
                 [PAYWALL: {node.credit_cost || 2} CC]
               </span>
             )}
+            {/* Timer display */}
+            {timerRemaining > 0 && !node.is_endpoint && (
+              <span
+                className={`font-mono-data text-xs tracking-[0.1em] ml-auto px-2 py-0.5 rounded-sm border ${
+                  timerRemaining <= 10
+                    ? 'text-error border-error/40 bg-error/10 animate-pulse'
+                    : 'text-secondary border-secondary/30 bg-secondary/5'
+                }`}
+              >
+                ⏱ {formatTimer(timerRemaining)}
+              </span>
+            )}
+            {timerExpired && (
+              <span className="font-mono-data text-xs text-error tracking-[0.1em] ml-auto">
+                TIMEOUT — AUTO_SELECTING
+              </span>
+            )}
           </div>
           <h1 className="font-headline-lg text-xl text-on-surface">{node.title}</h1>
         </div>
@@ -205,8 +279,8 @@ export default function NarrativeScenePage({
               <ChoiceButton
                 key={choice.id}
                 choice={choice}
-                onClick={() => handleChoice(choice.id)}
-                disabled={isChoosing}
+                onClick={() => handleChoice(choice.id, false)}
+                disabled={isChoosing || timerExpired}
               />
             ))}
           </div>

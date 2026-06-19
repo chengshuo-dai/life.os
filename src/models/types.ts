@@ -93,6 +93,8 @@ export interface NarrativeEnvironment {
   glitch_intensity: number;
   ambient_audio_cue?: string;
   light_wave_color?: 'cyan' | 'violet' | 'none';
+  /** Countdown timer in seconds — 0 or undefined means no timer. */
+  timer_seconds?: number;
 }
 
 export interface NarrativeChoice {
