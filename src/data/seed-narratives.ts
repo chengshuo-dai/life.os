@@ -87,7 +87,12 @@ The silence stretches. Then it snaps.`,
         narrative_id: 'NARRATIVE_082_MED',
         sequence_index: 1,
         title: 'Chemical Surge',
-        content: `"Push one milligram epinephrine."
+        content: `推注完成。
+生命在这一刻表现出了最原始的挣扎。
+
+心电监护仪上原本微弱的起伏开始变得狂暴。那是肾上腺素在血管中横冲直撞的证明。每一个脉冲都在挑战生物极限。
+
+"Push one milligram epinephrine."
 
 Your voice is calm. It always is, in these moments — a learned calm, cultivated over a decade of nights exactly like this one. The syringe plunges and the room collectively inhales. For three agonizing seconds, nothing happens. Then the monitor screams.
 
@@ -208,7 +213,9 @@ Two attending physicians. Two paths. One decision.`,
         narrative_id: 'NARRATIVE_082_MED',
         sequence_index: 3,
         title: "The Machine's Breath",
-        content: `The ECMO circuit hums at 3,750 RPM — a sound that is not quite mechanical and not quite organic, something in the uncanny valley between a heartbeat and a server fan. The oxygenator is a translucent cylinder filled with thousands of hollow fibers, each one thinner than a human hair, collectively doing the work that his lungs have surrendered. Blood enters dark as wine, exits bright as a fire engine, and somewhere in that color change is the entire mystery of being alive.
+        content: `泵机启动的低鸣取代了呼吸声。血液在透明导管中流转，被机器过滤、充氧、送回。现在，他的生命不由心脏维持，而由算法和流量计掌控。
+
+The ECMO circuit hums at 3,750 RPM — a sound that is not quite mechanical and not quite organic, something in the uncanny valley between a heartbeat and a server fan. The oxygenator is a translucent cylinder filled with thousands of hollow fibers, each one thinner than a human hair, collectively doing the work that his lungs have surrendered. Blood enters dark as wine, exits bright as a fire engine, and somewhere in that color change is the entire mystery of being alive.
 
 The surgical suite has gone quiet. Not the silence of the flatline — that was a silence of absence. This is a silence of suspension, of a question asked and not yet answered. The machine breathes for him now. Pumps for him. Oxygenates for him. The body on the table has become a component in a larger system, flesh integrated with polymer, biology deferring to engineering.
 
@@ -262,7 +269,11 @@ Somewhere in the伦理学 of all of this is a line. You're not sure which side o
         narrative_id: 'NARRATIVE_082_MED',
         sequence_index: 4,
         title: 'Resuscitation Phase',
-        content: `The seconds between shocks are longer than the shocks themselves. That's the thing nobody tells you in medical school — not the textbooks, not the simulations, not the attending physicians who've been doing this since before you were born. The shock is easy. Two hundred joules, a convulsion that lifts the body off the table, the sharp smell of electricity and something else, something that smells like the aftermath of lightning. The shock is clean, binary, decisive.
+        content: `电流贯穿胸膛。寂静。一秒。两秒。监测仪上的直线开始剧烈跳动，扭曲成不规则的波峰。
+
+凌晨三点的急诊室，只有除颤仪充电的啸叫声。
+
+The seconds between shocks are longer than the shocks themselves. That's the thing nobody tells you in medical school — not the textbooks, not the simulations, not the attending physicians who've been doing this since before you were born. The shock is easy. Two hundred joules, a convulsion that lifts the body off the table, the sharp smell of electricity and something else, something that smells like the aftermath of lightning. The shock is clean, binary, decisive.
 
 The waiting is none of those things.
 
@@ -288,7 +299,7 @@ You make the call.`,
         choices: [
           {
             id: 'choice_082_med_005_a',
-            text: 'Increase Epinephrine',
+            text: '推注肾上腺素 (Push Epinephrine)',
             consequence_text:
               'Push another milligram. Maximum chemical intervention.',
             target_node_id: 'NODE_082_MED_005',
@@ -397,7 +408,7 @@ You open your mouth to speak.`,
         choices: [
           {
             id: 'choice_082_med_007_a',
-            text: 'Call the Time of Death',
+            text: '记录死亡时间',
             consequence_text:
               'End the resuscitation. Face the wife at the glass door.',
             target_node_id: 'NODE_082_MED_007',
@@ -410,7 +421,7 @@ You open your mouth to speak.`,
           },
           {
             id: 'choice_082_med_007_b',
-            text: 'Continue Resuscitation',
+            text: '下达除颤指令',
             consequence_text:
               'Push past the protocol. One more round. One more chance.',
             target_node_id: 'NODE_082_MED_007',
@@ -460,7 +471,9 @@ You open your mouth to speak.`,
         narrative_id: 'NARRATIVE_115_CORP',
         sequence_index: 0,
         title: 'The 99th Floor',
-        content: `The cleaning crew left at 2:30 AM and the building has been empty ever since — empty of everyone except you and the city below, which at this hour is less a landscape than a circuit board, grids of amber streetlights and cooling office towers blinking their red aviation beacons against the black. The 99th floor is silent in the way that only moneyed silence can be: thick carpet absorbing footfalls, double-paned glass swallowing the wind, the soft white noise of climate control systems that cost more than most people's annual salaries.
+        content: `优化是唯一的生存之道。
+
+The cleaning crew left at 2:30 AM and the building has been empty ever since — empty of everyone except you and the city below, which at this hour is less a landscape than a circuit board, grids of amber streetlights and cooling office towers blinking their red aviation beacons against the black. The 99th floor is silent in the way that only moneyed silence can be: thick carpet absorbing footfalls, double-paned glass swallowing the wind, the soft white noise of climate control systems that cost more than most people's annual salaries.
 
 You've been staring at the quarterly reports for six hours. Not because they're due — they were filed three weeks ago, clean, signed off by compliance, blessed by the board. You're staring at them because something is wrong.
 
@@ -893,9 +906,9 @@ export function getNarrativeListItems(
 
     // Designation — the character archetype for each path
     const designationMap: Record<string, string> = {
-      NARRATIVE_082_MED: 'The Surgeon',
-      NARRATIVE_115_CORP: 'The Executive',
-      NARRATIVE_401_FREE: 'The Hermit',
+      NARRATIVE_082_MED: '/life 医生',
+      NARRATIVE_115_CORP: '/life 大厂',
+      NARRATIVE_401_FREE: '/life 大理',
     };
 
     // Fragmentation: inverse of progress with small random jitter (±5)

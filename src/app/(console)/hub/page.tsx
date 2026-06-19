@@ -70,7 +70,7 @@ export default function HubPage() {
           }`}
         >
           <p className="font-mono-data text-[10px] text-outline tracking-[0.2em] mb-3">
-            DESTINY_DATA_BANK // ACTIVE_PATHS
+            检索另一种人生的终局
           </p>
           <h1 className="font-display-hero text-3xl md:text-4xl text-on-surface tracking-[0.1em]">
             NARRATIVE<span className="text-secondary">_</span>HUB

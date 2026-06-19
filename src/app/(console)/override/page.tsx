@@ -43,21 +43,21 @@ export default function OverridePage() {
   const narrativeCards = [
     {
       id: 'NARRATIVE_082_MED',
-      designation: 'The Surgeon',
+      designation: '/life 医生',
       fragmentation: 74,
       neuralIntegrity: 91.2,
       dataIntegrity: 'HIGH',
     },
     {
       id: 'NARRATIVE_115_CORP',
-      designation: 'The Executive',
+      designation: '/life 大厂',
       fragmentation: 0,
       neuralIntegrity: 98.9,
       dataIntegrity: 'OPTIMAL',
     },
     {
       id: 'NARRATIVE_401_FREE',
-      designation: 'The Hermit',
+      designation: '/life 大理',
       fragmentation: 22,
       neuralIntegrity: 14.5,
       dataIntegrity: 'CRITICAL',
