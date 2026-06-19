@@ -19,6 +19,13 @@ export default function ArchivePage() {
   const [scrubPosition, setScrubPosition] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isScrubbing, setIsScrubbing] = useState(false);
+  const [viewMode, setViewMode] = useState<'timeline' | 'strata'>('timeline');
+  const [strataData, setStrataData] = useState<{
+    surface: ArchiveTimelineEntry[];
+    subsurface: ArchiveTimelineEntry[];
+    redacted: ArchiveTimelineEntry[];
+    bedrock: ArchiveTimelineEntry[];
+  } | null>(null);
 
   useEffect(() => {
     dispatch({ type: 'SET_PAGE', page: '/archive' });
@@ -28,20 +35,56 @@ export default function ArchivePage() {
   const loadArchive = async (timestamp?: number) => {
     setIsLoading(true);
     const query = timestamp ? `?timestamp=${timestamp}` : '';
-    const result = await apiFetch<{
-      entries: ArchiveTimelineEntry[];
-      corrupted_cards: CorruptedArcCard[];
-      has_corrupted_data: boolean;
-      scrubbing_position: number;
-      system_stability: number;
-      active_nodes: number;
-    }>(`/archive/timeline${query}`);
 
-    if (result.success && result.data) {
-      setEntries(result.data.entries);
-      setCorruptedCards(result.data.corrupted_cards || []);
-      setHasCorrupted(result.data.has_corrupted_data);
-      setScrubPosition(result.data.scrubbing_position);
+    if (viewMode === 'strata') {
+      // Use strata endpoint for layered geological view
+      const result = await apiFetch<{
+        strata: {
+          surface: ArchiveTimelineEntry[];
+          subsurface: ArchiveTimelineEntry[];
+          redacted: ArchiveTimelineEntry[];
+          bedrock: ArchiveTimelineEntry[];
+        };
+        counts: { surface: number; subsurface: number; redacted: number; bedrock: number; total: number };
+        corrupted_cards: CorruptedArcCard[];
+        has_corrupted_data: boolean;
+        scrubbing_position: number;
+        system_stability: number;
+        active_nodes: number;
+        reality_sync: number;
+      }>(`/archive/strata${query}`);
+
+      if (result.success && result.data) {
+        setStrataData(result.data.strata);
+        setCorruptedCards(result.data.corrupted_cards || []);
+        setHasCorrupted(result.data.has_corrupted_data);
+        setScrubPosition(result.data.scrubbing_position);
+        // Flatten for entry-based rendering compatibility
+        setEntries([
+          ...result.data.strata.surface,
+          ...result.data.strata.subsurface,
+          ...result.data.strata.redacted,
+          ...result.data.strata.bedrock,
+        ]);
+      }
+    } else {
+      // Default timeline view
+      const result = await apiFetch<{
+        entries: ArchiveTimelineEntry[];
+        corrupted_cards: CorruptedArcCard[];
+        has_corrupted_data: boolean;
+        scrubbing_position: number;
+        system_stability: number;
+        active_nodes: number;
+      }>(`/archive/timeline${query}`);
+
+      if (result.success && result.data) {
+        setEntries(result.data.entries);
+        setCorruptedCards(result.data.corrupted_cards || []);
+        setHasCorrupted(result.data.has_corrupted_data);
+        setScrubPosition(result.data.scrubbing_position);
+        setStrataData(null);
+      }
     }
     setIsLoading(false);
   };
@@ -111,6 +154,35 @@ export default function ArchivePage() {
               TIMELINE<span className="text-secondary">_</span>ARCHIVE
             </h1>
             <div className="flex items-center gap-4">
+              {/* View mode toggle */}
+              <div className="flex items-center gap-1 glass-panel rounded-md p-0.5">
+                <button
+                  onClick={() => {
+                    setViewMode('timeline');
+                    loadArchive(scrubPosition);
+                  }}
+                  className={`px-3 py-1 text-[10px] font-mono-data tracking-[0.1em] rounded transition-all ${
+                    viewMode === 'timeline'
+                      ? 'bg-secondary/20 text-secondary'
+                      : 'text-outline hover:text-on-surface-variant'
+                  }`}
+                >
+                  TIMELINE
+                </button>
+                <button
+                  onClick={() => {
+                    setViewMode('strata');
+                    loadArchive(scrubPosition);
+                  }}
+                  className={`px-3 py-1 text-[10px] font-mono-data tracking-[0.1em] rounded transition-all ${
+                    viewMode === 'strata'
+                      ? 'bg-secondary/20 text-secondary'
+                      : 'text-outline hover:text-on-surface-variant'
+                  }`}
+                >
+                  STRATA
+                </button>
+              </div>
               <span className="font-mono-data text-[10px] text-secondary">
                 STABILITY: {99.98}%
               </span>
@@ -157,6 +229,71 @@ export default function ArchivePage() {
             />
           </div>
         </div>
+
+        {/* Strata Layer Visualization (Alignment Guide §1.E) */}
+        {viewMode === 'strata' && strataData && !isLoading && (
+          <div className="mb-8 space-y-3">
+            <p className="font-mono-data text-[10px] text-outline tracking-[0.15em] mb-3">
+              GEOLOGICAL_STRATA_VIEW
+            </p>
+            {/* SURFACE layer */}
+            {strataData.surface.length > 0 && (
+              <div className="glass-panel rounded-lg p-4 border-secondary/10">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="w-2 h-2 rounded-full bg-secondary" />
+                  <span className="font-mono-data text-[10px] text-secondary tracking-[0.1em]">
+                    SURFACE_LAYER
+                  </span>
+                  <span className="font-mono-data text-[9px] text-outline">
+                    ({strataData.surface.length} entries // LOW_FRAGMENTATION)
+                  </span>
+                </div>
+              </div>
+            )}
+            {/* SUBSURFACE layer */}
+            {strataData.subsurface.length > 0 && (
+              <div className="glass-panel rounded-lg p-4 border-amber-500/10">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="w-2 h-2 rounded-full bg-amber-500/60" />
+                  <span className="font-mono-data text-[10px] text-amber-500/80 tracking-[0.1em]">
+                    SUBSURFACE_LAYER
+                  </span>
+                  <span className="font-mono-data text-[9px] text-outline">
+                    ({strataData.subsurface.length} entries // MODERATE_FRAGMENTATION)
+                  </span>
+                </div>
+              </div>
+            )}
+            {/* REDACTED layer */}
+            {strataData.redacted.length > 0 && (
+              <div className="glass-panel rounded-lg p-4 border-error/20 bg-error/[0.02]">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="w-2 h-2 rounded-full bg-error animate-pulse" />
+                  <span className="font-mono-data text-[10px] text-error tracking-[0.1em]">
+                    REDACTED_STRATA
+                  </span>
+                  <span className="font-mono-data text-[9px] text-outline">
+                    ({strataData.redacted.length} entries // CORRUPTED_OR_CLASSIFIED)
+                  </span>
+                </div>
+              </div>
+            )}
+            {/* BEDROCK layer */}
+            {strataData.bedrock.length > 0 && (
+              <div className="glass-panel rounded-lg p-4 border-white/5">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="w-2 h-2 rounded-full bg-white/20" />
+                  <span className="font-mono-data text-[10px] text-outline tracking-[0.1em]">
+                    BEDROCK
+                  </span>
+                  <span className="font-mono-data text-[9px] text-outline">
+                    ({strataData.bedrock.length} entries // SYSTEM_EVENTS_IMMUTABLE)
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
 
         {/* Timeline Entries */}
         {isLoading ? (

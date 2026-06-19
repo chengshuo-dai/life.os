@@ -341,6 +341,29 @@
     0%, 100% { box-shadow: 0 0 8px rgba(123, 208, 255, 0.2); }
     50% { box-shadow: 0 0 20px rgba(123, 208, 255, 0.5); }
   }
+
+  /* fragment-revealed — reassembly transition for decrypted content (spec: Fragment_Reassembly) */
+  .fragment-revealed {
+    animation: fragment-reassembly 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @keyframes fragment-reassembly {
+    0% {
+      opacity: 0;
+      filter: blur(12px) grayscale(0.6);
+      transform: translateY(8px) scale(0.98);
+    }
+    40% {
+      opacity: 0.5;
+      filter: blur(4px) grayscale(0.3);
+      transform: translateY(2px) scale(0.995);
+    }
+    100% {
+      opacity: 1;
+      filter: blur(0) grayscale(0);
+      transform: translateY(0) scale(1);
+    }
+  }
 }
 
 /* ─── Utilities Layer ─────────────────────────────────── */

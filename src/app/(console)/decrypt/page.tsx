@@ -6,7 +6,14 @@ import { useRouter } from 'next/navigation';
 import { useLifeOS } from '@/lib/store-client';
 import GlitchText from '@/components/ui/GlitchText';
 import CreditsDisplay from '@/components/ui/CreditsDisplay';
-import type { PaymentUnlockResponse, NarrativeNode } from '@/models/types';
+import ProgressBar from '@/components/ui/ProgressBar';
+
+interface DecryptResponse {
+  decrypted_text: string;
+  new_balance: number;
+  fragment_node_id: string;
+  trigger_reassembly: boolean;
+}
 
 /**
  * Decryption Gateway (SCREEN_7 / SCREEN_25)
@@ -34,9 +41,11 @@ function DecryptContent() {
   const router = useRouter();
   const { state, dispatch, apiFetch } = useLifeOS();
   const [isDecrypting, setIsDecrypting] = useState(false);
-  const [unlockedNode, setUnlockedNode] = useState<NarrativeNode | null>(null);
+  const [decryptedText, setDecryptedText] = useState('');
+  const [fragmentNodeId, setFragmentNodeId] = useState('');
   const [error, setError] = useState('');
   const [gridCells, setGridCells] = useState<boolean[]>(Array(36).fill(false));
+  const [reassemblyPhase, setReassemblyPhase] = useState<'hidden' | 'assembling' | 'revealed'>('hidden');
 
   const needsUnlock = searchParams.get('needs_unlock') === 'true';
   const narrativeId = searchParams.get('narrative_id');
@@ -49,7 +58,10 @@ function DecryptContent() {
     if (!narrativeId) return;
     setIsDecrypting(true);
     setError('');
+    setDecryptedText('');
+    setReassemblyPhase('hidden');
 
+    // Grid fill animation while decrypting
     let cellIndex = 0;
     const interval = setInterval(() => {
       setGridCells((prev) => {
@@ -62,13 +74,16 @@ function DecryptContent() {
       });
     }, 50);
 
-    const result = await apiFetch<PaymentUnlockResponse>(
-      '/payments/unlock-fragment',
+    const nodeId = `${narrativeId.replace('NARRATIVE_', 'NODE_')}_004`;
+
+    // Use the dedicated /api/v1/decrypt endpoint (Alignment Guide §1.D, §2)
+    const result = await apiFetch<DecryptResponse>(
+      '/decrypt',
       {
         method: 'POST',
         body: JSON.stringify({
+          fragment_id: nodeId,
           narrative_id: narrativeId,
-          node_id: `${narrativeId.replace('NARRATIVE_', 'NODE_')}_004`,
         }),
       }
     );
@@ -76,8 +91,23 @@ function DecryptContent() {
     clearInterval(interval);
 
     if (result.success && result.data) {
-      setUnlockedNode(result.data.unlocked_content);
+      setDecryptedText(result.data.decrypted_text);
+      setFragmentNodeId(result.data.fragment_node_id);
       setGridCells(Array(36).fill(true));
+
+      // Trigger Fragment_Reassembly animation sequence
+      setReassemblyPhase('assembling');
+      setTimeout(() => {
+        setReassemblyPhase('revealed');
+      }, 600);
+
+      // Update credits in store
+      if (state.credits) {
+        dispatch({
+          type: 'SET_CREDITS',
+          credits: { ...state.credits, balance: result.data.new_balance },
+        });
+      }
     } else {
       setError(result.error || 'Decryption failed. Insufficient credits or invalid fragment.');
     }
@@ -129,7 +159,7 @@ function DecryptContent() {
               ))}
             </div>
 
-            {needsUnlock && narrativeId && !unlockedNode && (
+            {needsUnlock && narrativeId && !decryptedText && (
               <div className="text-center">
                 <button
                   onClick={handleDecrypt}
@@ -139,30 +169,70 @@ function DecryptContent() {
                   {isDecrypting ? 'DECRYPTING...' : 'INITIATE_DECRYPTION'}
                 </button>
                 <p className="font-mono-data text-[10px] text-outline mt-2">
-                  COST: 2.50 CC // Current Balance: {credits.balance.toFixed(2)} CC
+                  COST: 1.00 CC // Current Balance: {credits.balance.toFixed(2)} CC
                 </p>
               </div>
             )}
 
-            {unlockedNode && (
-              <div className="animate-glitch-reveal">
-                <div className="bg-secondary/5 border border-secondary/20 rounded-lg p-4 mb-4">
-                  <p className="font-mono-data text-[10px] text-secondary tracking-[0.1em] mb-2">
-                    FRAGMENT_UNLOCKED // {unlockedNode.id}
-                  </p>
-                  <h3 className="font-headline-lg text-lg text-on-surface mb-3">
-                    {unlockedNode.title}
-                  </h3>
-                  <p className="font-body-md text-sm text-on-surface-variant">
-                    {unlockedNode.content.substring(0, 300)}...
-                  </p>
-                </div>
-                <button
-                  onClick={() => router.push(`/narratives/${narrativeId}`)}
-                  className="liquid-btn w-full"
+            {/* Fragment Reassembly — Alignment Guide §1.D */}
+            {decryptedText && (
+              <div>
+                {/* Reassembly progress indicator */}
+                {reassemblyPhase === 'assembling' && (
+                  <div className="mb-4 p-3 glass-panel rounded-lg border-secondary/20 text-center">
+                    <p className="font-mono-data text-xs text-secondary cursor-blink">
+                      &gt; FRAGMENT_REASSEMBLY_IN_PROGRESS
+                      <span className="cursor-blink">_</span>
+                    </p>
+                    <ProgressBar
+                      value={75}
+                      max={100}
+                      variant="cyan"
+                      pulse
+                      className="mt-2"
+                    />
+                  </div>
+                )}
+
+                {/* Decrypted content with reassembly transition */}
+                <div
+                  className={`transition-all duration-700 ${
+                    reassemblyPhase === 'revealed'
+                      ? 'opacity-100 filter-none'
+                      : reassemblyPhase === 'assembling'
+                      ? 'opacity-60 blur-sm'
+                      : 'opacity-0 blur-md'
+                  }`}
                 >
-                  CONTINUE_NARRATIVE
-                </button>
+                  <div className="bg-secondary/5 border border-secondary/20 rounded-lg p-4 mb-4">
+                    <p className="font-mono-data text-[10px] text-secondary tracking-[0.1em] mb-2">
+                      FRAGMENT_DECRYPTED // {fragmentNodeId}
+                    </p>
+                    <div className="font-body-md text-sm text-on-surface-variant space-y-3">
+                      {decryptedText.split('\n').map((paragraph, i) => {
+                        if (!paragraph.trim()) return null;
+                        if (paragraph.startsWith('>') || paragraph.startsWith('[')) {
+                          return (
+                            <p key={i} className="font-mono-data text-xs text-secondary">
+                              {paragraph}
+                            </p>
+                          );
+                        }
+                        return (
+                          <p key={i} className="leading-relaxed">
+                            {paragraph}
+                          </p>
+                        );
+                      })}
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => router.push(`/narratives/${narrativeId}`)}
+                    className="liquid-btn w-full"
+                  >
+                    CONTINUE_NARRATIVE
+                  </button>
+                </div>
               </div>
             )}
 

@@ -9,6 +9,7 @@ import type {
   ChoiceResponse,
   PathSyncItem,
 } from '@/models/types';
+import { dispatchGlitchStart, dispatchGlitchEnd } from '@/lib/effects';
 
 // ─── State Shape ───────────────────────────────────────
 export interface LifeOSState {
@@ -135,6 +136,7 @@ export function LifeOSProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   // API fetch wrapper that includes auth token
+  // Fires glitch-start on pending, glitch-end on settled (per Alignment Guide §3)
   const apiFetch = useCallback(
     async <T,>(
       path: string,
@@ -149,6 +151,9 @@ export function LifeOSProvider({ children }: { children: React.ReactNode }) {
         headers['Authorization'] = `Bearer ${state.token}`;
       }
 
+      // Shader/glitch activation on API request pending
+      dispatchGlitchStart();
+
       try {
         const res = await fetch(`${API_BASE}${path}`, {
           ...options,
@@ -156,8 +161,10 @@ export function LifeOSProvider({ children }: { children: React.ReactNode }) {
         });
 
         const json = await res.json();
+        dispatchGlitchEnd();
         return json;
       } catch (error) {
+        dispatchGlitchEnd();
         return { success: false, error: 'Network error' };
       }
     },
@@ -173,6 +180,52 @@ export function LifeOSProvider({ children }: { children: React.ReactNode }) {
     }
     dispatch({ type: 'SET_INITIALIZING', isInitializing: false });
   }, []);
+
+  // ─── window.LifeOS global state (Alignment Guide §3) ──
+  // Syncs key runtime values to a global object for cross-page
+  // and non-React access (canvas scripts, browser extensions, debug).
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      (window as any).LifeOS = {
+        get current_balance() {
+          return state.credits?.balance ?? 0;
+        },
+        get current_node() {
+          return state.currentNode?.id ?? null;
+        },
+        get current_narrative() {
+          return state.activeNarrative?.id ?? null;
+        },
+        get sync_percentage() {
+          return state.profile?.reality_sync_percentage ?? 0;
+        },
+        get is_authenticated() {
+          return state.isAuthenticated;
+        },
+        get terminal_open() {
+          return state.terminalOpen;
+        },
+        get glitch_active() {
+          return state.glitchActive;
+        },
+        // Imperative helpers
+        triggerGlitch: (target?: HTMLElement, durationMs?: number) => {
+          dispatchGlitchStart(target, durationMs);
+        },
+        clearGlitch: (target?: HTMLElement) => {
+          dispatchGlitchEnd(target);
+        },
+      };
+    }
+  }, [
+    state.credits?.balance,
+    state.currentNode?.id,
+    state.activeNarrative?.id,
+    state.profile?.reality_sync_percentage,
+    state.isAuthenticated,
+    state.terminalOpen,
+    state.glitchActive,
+  ]);
 
   return (
     <LifeOSContext.Provider value={{ state, dispatch, apiFetch }}>
