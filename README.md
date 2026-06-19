@@ -2,7 +2,7 @@
 
 > *A high-tech operating system designed for the retrieval and manipulation of human destinies.*
 
-![Life.OS](https://img.shields.io/badge/version-1.0.0--alpha-blue) ![Next.js](https://img.shields.io/badge/Next.js-14.2-black) ![Vercel](https://img.shields.io/badge/deploy-Vercel-black)
+![Life.OS](https://img.shields.io/badge/version-1.0.0--alpha-blue) ![Next.js](https://img.shields.io/badge/Next.js-14.2-black) ![Vercel](https://img.shields.io/badge/deploy-Vercel-black) ![Author](https://img.shields.io/badge/author-Lucas_Dai_(代成硕)-7BD0FF)
 
 **Life.OS** is an interactive narrative experience wrapped in a cinematic, ultra-dark operating system interface. It presents three life paths — Medical Surgeon, Corporate Executive, and Spiritual Hermit — as "destiny narratives" that users explore, make choices within, and archive. Every decision shifts your Reality Sync percentage, spends Curious Credits, and writes to your personal Destiny Data Bank.
 
@@ -210,6 +210,7 @@ Choices carry consequences: reality sync deltas, fragment gains/losses, credit d
 
 ## Credits
 
+- **Author** — Lucas Dai (代成硕)
 - **Design System** — AI-Native Minimalism + Glassmorphism + Corporate Modernism
 - **Typography** — Geist by Vercel, rendered via Inter + JetBrains Mono
 - **Original frontend screens** — 36 static HTML prototypes served as visual reference
@@ -218,3 +219,4 @@ Choices carry consequences: reality sync deltas, fragment gains/losses, credit d
 ---
 
 *Life.OS v1.0.0-alpha — "Every choice rewrites the destiny."*
+*Created by Lucas Dai (代成硕)*

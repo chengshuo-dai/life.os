@@ -3,6 +3,7 @@
   "version": "1.0.0-alpha",
   "private": true,
   "description": "Life.OS — Narrative Reality Console",
+  "author": "Lucas Dai (代成硕)",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

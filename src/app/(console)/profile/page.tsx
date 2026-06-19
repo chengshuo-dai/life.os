@@ -111,6 +111,18 @@ export default function ProfilePage() {
 
             <div className="glass-panel rounded-xl p-4 space-y-3">
               <p className="font-mono-data text-[10px] text-outline tracking-[0.15em]">
+                SYSTEM_INFO
+              </p>
+              <div className="space-y-1">
+                <p className="font-mono-data text-[10px] text-outline">
+                  Created by Lucas Dai (代成硕)
+                </p>
+                <p className="font-mono-data text-[10px] text-outline">
+                  © 2026 STITCH_LIFE_CORP
+                </p>
+              </div>
+              <div className="border-t border-white/5 my-2" />
+              <p className="font-mono-data text-[10px] text-outline tracking-[0.15em]">
                 SYSTEM_PROTOCOLS
               </p>
               {['Sync Settings', 'Security Clearance', 'Neural Dampening', 'Destiny Export'].map(

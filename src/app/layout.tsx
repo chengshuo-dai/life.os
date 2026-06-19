@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   title: 'Life.OS | Narrative Reality Console',
   description:
     'A high-tech operating system designed for the retrieval and manipulation of human destinies.',
+  authors: [{ name: 'Lucas Dai (代成硕)' }],
+  creator: 'Lucas Dai',
+  publisher: 'Lucas Dai',
 };
 
 export const viewport = {

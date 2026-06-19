@@ -1,5 +1,6 @@
 ---
 name: Narrative Reality Console
+author: Lucas Dai (代成硕)
 colors:
   surface: '#131317'
   surface-dim: '#131317'

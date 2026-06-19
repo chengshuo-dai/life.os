@@ -117,6 +117,7 @@ function handleStatus(command: string, args: string[]): TerminalResponse {
           `Version: ALPHA-9-SYNC (Build 2026.06.19)`,
           `Kernel: DESTINY_ENGINE v3.2.1`,
           `Neural Interface: ACTIVE`,
+          `Author: Lucas Dai (代成硕)`,
           `All rights reserved. STITCH_LIFE_CORP.`,
         ],
         action_triggered: 'NONE',
@@ -126,6 +127,7 @@ function handleStatus(command: string, args: string[]): TerminalResponse {
       return {
         output_lines: [
           `OPERATOR_ID:  ALPHA-9-SYNC`,
+          `CREATOR:       Lucas Dai (代成硕)`,
           `CLEARANCE:     ROOT`,
           `LOC:           40.7128° N, 74.0060° W`,
           `SECTOR:        Sector-7`,

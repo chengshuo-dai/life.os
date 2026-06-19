@@ -76,6 +76,7 @@ export default function InitializePage() {
 
   const logLines = [
     '[BOOT] Life.OS Kernel v3.2.1 // ALPHA-9-SYNC',
+    '[BOOT] Authorized Operator: Lucas Dai (代成硕)',
     '[BOOT] Initializing neural interface...',
     `[BOOT] Signal strength: ${(0.8 + Math.random() * 0.2).toFixed(2)} MS`,
     '[BOOT] Quantum state verified... OK',
