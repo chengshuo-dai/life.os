@@ -8,6 +8,7 @@ const NAV_ITEMS = [
   { label: 'ARCHIVE', href: '/archive', icon: 'archive' },
   { label: 'CONSOLE', href: '/hub', icon: 'terminal' },
   { label: 'PATHS', href: '/narratives', icon: 'route' },
+  { label: 'CREDITS', href: '/credits', icon: 'currency' },
   { label: 'PROFILE', href: '/profile', icon: 'person' },
 ] as const;
 
