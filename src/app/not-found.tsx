@@ -53,6 +53,7 @@ export default function NotFound() {
         {/* System metadata */}
         <div className="font-mono-data text-[9px] text-outline tracking-[0.15em] space-y-1">
           <p>OS_VER: ALPHA-9-SYNC</p>
+          <p>AUTHOR: Lucas Dai (代成硕)</p>
           <p>STATUS: FRAGMENT_LOST</p>
         </div>
       </div>

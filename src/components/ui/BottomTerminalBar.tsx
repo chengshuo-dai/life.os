@@ -122,6 +122,9 @@ export default function BottomTerminalBar() {
           <span className="font-mono-data text-[10px] text-outline hidden sm:block">
             {state.profile?.operator_name || 'OPERATOR_NULL'}
           </span>
+          <span className="font-mono-data text-[10px] text-outline/60 hidden sm:block border-l border-white/10 pl-3 ml-1">
+            © Lucas Dai
+          </span>
           <span className="cursor-blink text-secondary font-mono-data select-none">_</span>
         </div>
       </div>
